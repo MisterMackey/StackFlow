@@ -170,6 +170,7 @@ namespace StackFlow.Models
         {
             this.Name = Name;
             this.Description = Description;
+            m_Stack = new Stack<WorkStackItem>();
         }
         #endregion
 
