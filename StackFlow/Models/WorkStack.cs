@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace StackFlow.Models
 {
+    [Serializable]
     public class WorkStack : IEnumerable<WorkStackItem>
     {
         private Stack<WorkStackItem> m_Stack;

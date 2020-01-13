@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace StackFlow.Models
 {
+    [Serializable]
     public class WorkStackItem
     {
         #region Properties

@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace StackFlow.Models
 {
+    [Serializable]
     public class StackFlowSession
     {
         public List<WorkStack> Session { get; set; }
