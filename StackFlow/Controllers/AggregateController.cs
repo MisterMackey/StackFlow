@@ -10,7 +10,7 @@ namespace StackFlow.Controllers
     public class AggregateController : IController
     {
         private readonly IController[] _BabyControllers;
-        public void Initialize(Form1 form)
+        public void Initialize(IStackFlowForm form)
         {
             for (int i = 0; i < _BabyControllers.Length; i++)
             {

@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using StackFlow.Controllers;
+using StackFlow.EventArgClasses;
 
 namespace StackFlow
 {
-    public partial class Form1 : Form
+    public partial class Form1 : Form, IStackFlowForm
     {
         private readonly IController _controller;
         private int PutThisFormToForeGround;
@@ -23,7 +24,8 @@ namespace StackFlow
         public event EventHandler UserSavesSession;
         public event EventHandler UserLoadsSession;
         //window handle, key, keyId, modifier
-        public event EventHandler<Tuple<IntPtr,int,int,int>> UserRequestsNewHotkey;
+        public event EventHandler<HotKeyRegisterEventArgs> UserRequestsNewHotkey;
+        public event EventHandler<HotKeyPressEventArgs> UserPressedHotkey;
         #endregion
 
         public Form1(IController controller)
@@ -37,25 +39,30 @@ namespace StackFlow
             // ALT+CTRL = 1 + 2 = 3 , CTRL+SHIFT = 2 + 4 = 6...
             PutThisFormToForeGround = 453132;
             //following register ctrl shift f as hotkey to maximize window
-            UserRequestsNewHotkey?.Invoke(this, new Tuple<IntPtr, int, int, int>(
-                this.Handle, (int)Keys.F, PutThisFormToForeGround, 6));
+            UserRequestsNewHotkey?.Invoke(this, new HotKeyRegisterEventArgs() { 
+            HotKeyId = PutThisFormToForeGround
+            ,KeyToRegister = Keys.F
+            ,WindowHandleToRegisterHotKeyTo = this.Handle
+            ,Modifier = 6
+            ,Action = HotKeyableActions.BringToForeground});
         }
 
         private void BindEventHandlers()
         {
-            throw new NotImplementedException();
+            
         }
 
         protected override void WndProc(ref Message m)
         {
-            //additional blocks checking for other WParams associated to other hotkeys can handle that
-            if (m.Msg == 0x0312 && m.WParam.ToInt32() == PutThisFormToForeGround)
+            //invoke event and let the controller deal with it
+            if (m.Msg == 0x0312)
             {
-                // My hotkey has been typed
-
-                // Do what you want here
-                // ...
-                Activate();
+                UserPressedHotkey?.Invoke(this, new HotKeyPressEventArgs()
+                {
+                    HandleHotKeyIsRegisteredTo = this.Handle
+                    ,
+                    KeyId = m.WParam.ToInt32()
+                });
             }
             base.WndProc(ref m);
         }

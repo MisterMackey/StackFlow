@@ -9,6 +9,6 @@ namespace StackFlow.Controllers
         /// <summary>
         /// Instructs the controller to perform steps necessary prior to functioning such as registering to event handlers or loading config or whatever
         /// </summary>
-        void Initialize(Form1 form);
+        void Initialize(IStackFlowForm form);
     }
 }
