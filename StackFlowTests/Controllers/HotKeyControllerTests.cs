@@ -1,6 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StackFlow.Controllers;
 using StackFlow.EventArgClasses;
+using StackFlow.Models;
+using StackFlowTests;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,27 +10,6 @@ using System.Windows.Forms;
 
 namespace StackFlow.Controllers.Tests
 {
-    /// <summary>
-    /// this subclass is used to test the controller, as it needs an IStackFlowForm to attach to
-    /// </summary>
-    partial class TestForm : Form, IStackFlowForm
-    {
-        public event EventHandler UserClicksInterrupt;
-        public event EventHandler UserModifiesActiveStack;
-        public event EventHandler UserModifiesFloatingStack;
-        public event EventHandler UserSavesSession;
-        public event EventHandler UserLoadsSession;
-        public event EventHandler<HotKeyRegisterEventArgs> UserRequestsNewHotkey;
-        public event EventHandler<HotKeyPressEventArgs> UserPressedHotkey;
-        public void InvokeHotkeyRegister(HotKeyRegisterEventArgs args)
-        {
-            UserRequestsNewHotkey?.Invoke(this, args);
-        }
-        public void InvokeHotkeyPress(HotKeyPressEventArgs args)
-        {
-            UserPressedHotkey?.Invoke(this, args);
-        }
-    }
     [TestClass()]
     public class HotKeyControllerTests
     {

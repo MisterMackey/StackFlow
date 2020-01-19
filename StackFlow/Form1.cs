@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using StackFlow.Controllers;
 using StackFlow.EventArgClasses;
+using StackFlow.Models;
 
 namespace StackFlow
 {
@@ -17,17 +18,30 @@ namespace StackFlow
     {
         private readonly IController _controller;
         private int PutThisFormToForeGround;
+        internal StackFlowSession ActiveSession { get; set; }
         #region Events
         public event EventHandler UserClicksInterrupt;
         public event EventHandler UserModifiesActiveStack;
         public event EventHandler UserModifiesFloatingStack;
-        public event EventHandler UserSavesSession;
-        public event EventHandler UserLoadsSession;
+        public event EventHandler<SessionSaveOrLoadArgs> UserSavesSession;
+        public event EventHandler<SessionSaveOrLoadArgs> UserLoadsSession;
         //window handle, key, keyId, modifier
         public event EventHandler<HotKeyRegisterEventArgs> UserRequestsNewHotkey;
         public event EventHandler<HotKeyPressEventArgs> UserPressedHotkey;
         #endregion
 
+        #region public
+        public StackFlowSession GetActiveSession()
+        {
+            return ActiveSession;
+        }
+
+        public void SetActiveSession(StackFlowSession Session)
+        {
+            //probably trigger save event here?
+            ActiveSession = Session;
+        }
+        #endregion
         public Form1(IController controller)
         {
             InitializeComponent();
@@ -67,7 +81,6 @@ namespace StackFlow
             base.WndProc(ref m);
         }
 
-        
 
     }
 }
