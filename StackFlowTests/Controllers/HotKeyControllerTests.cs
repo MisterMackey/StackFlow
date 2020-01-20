@@ -1,11 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StackFlow.Controllers;
 using StackFlow.EventArgClasses;
-using StackFlow.Models;
 using StackFlowTests;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 
 namespace StackFlow.Controllers.Tests
@@ -13,7 +8,7 @@ namespace StackFlow.Controllers.Tests
     [TestClass()]
     public class HotKeyControllerTests
     {
-        
+
 
         [TestMethod()]
         public void InitializeTest()
@@ -26,7 +21,7 @@ namespace StackFlow.Controllers.Tests
         public void RegisterAndInvokeForeground()
         {
             var form = new TestForm();
-            var controller =  new HotKeyController();
+            var controller = new HotKeyController();
             controller.Initialize(form);
             form.InvokeHotkeyRegister(new HotKeyRegisterEventArgs()
             {

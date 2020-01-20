@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using StackFlow.Controllers;
+﻿using StackFlow.Controllers;
 using StackFlow.EventArgClasses;
 using StackFlow.Models;
+using System;
+using System.Windows.Forms;
 
 namespace StackFlow
 {
     public partial class Form1 : Form, IStackFlowForm
     {
         private readonly IController _controller;
-        private int PutThisFormToForeGround;
+        private readonly int PutThisFormToForeGround;
         internal StackFlowSession ActiveSession { get; set; }
         #region Events
         public event EventHandler UserClicksInterrupt;
@@ -53,17 +45,23 @@ namespace StackFlow
             // ALT+CTRL = 1 + 2 = 3 , CTRL+SHIFT = 2 + 4 = 6...
             PutThisFormToForeGround = 453132;
             //following register ctrl shift f as hotkey to maximize window
-            UserRequestsNewHotkey?.Invoke(this, new HotKeyRegisterEventArgs() { 
-            HotKeyId = PutThisFormToForeGround
-            ,KeyToRegister = Keys.F
-            ,WindowHandleToRegisterHotKeyTo = this.Handle
-            ,Modifier = 6
-            ,Action = HotKeyableActions.BringToForeground});
+            UserRequestsNewHotkey?.Invoke(this, new HotKeyRegisterEventArgs()
+            {
+                HotKeyId = PutThisFormToForeGround
+            ,
+                KeyToRegister = Keys.F
+            ,
+                WindowHandleToRegisterHotKeyTo = this.Handle
+            ,
+                Modifier = 6
+            ,
+                Action = HotKeyableActions.BringToForeground
+            });
         }
 
         private void BindEventHandlers()
         {
-            
+
         }
 
         protected override void WndProc(ref Message m)

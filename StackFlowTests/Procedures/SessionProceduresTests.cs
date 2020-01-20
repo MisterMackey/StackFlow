@@ -1,10 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StackFlow.Models;
-using StackFlow.Procedures;
 using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Text;
+using System.IO;
 
 namespace StackFlow.Procedures.Tests
 {
@@ -28,7 +26,7 @@ namespace StackFlow.Procedures.Tests
 
             DirectoryInfo dir = new DirectoryInfo(Environment.CurrentDirectory);
 
-            SessionProcedures.SaveSession(dir.FullName + @"\testfile.dat", s);          
+            SessionProcedures.SaveSession(dir.FullName + @"\testfile.dat", s);
 
             Assert.IsTrue(File.Exists(dir.FullName + @"\testfile.dat"));
 

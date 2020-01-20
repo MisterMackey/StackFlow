@@ -1,8 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
-using System.Text;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace StackFlow.Models
 {
@@ -13,7 +10,7 @@ namespace StackFlow.Models
         {
             Session = new List<WorkStack>();
             CompletedItems = new List<WorkStackItem>();
-            
+
         }
         /// <summary>
         /// Holds all the workstacks except the floating stack

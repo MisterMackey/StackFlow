@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace StackFlow.Controllers
+﻿namespace StackFlow.Controllers
 {
     /// <summary>
     /// AggregateController has a bunch of controllers

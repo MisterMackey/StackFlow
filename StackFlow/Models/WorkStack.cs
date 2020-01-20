@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using System.Linq;
 
 namespace StackFlow.Models
@@ -10,7 +9,7 @@ namespace StackFlow.Models
     [Serializable]
     public class WorkStack : IEnumerable<WorkStackItem>
     {
-        private Stack<WorkStackItem> m_Stack;
+        private readonly Stack<WorkStackItem> m_Stack;
         public string Name { get; set; }
         public string Description { get; set; }
         public WorkStackItemPriority Priority
@@ -176,7 +175,7 @@ namespace StackFlow.Models
         #endregion
 
         #region Public Methods
-        
+
         #endregion
     }
 }

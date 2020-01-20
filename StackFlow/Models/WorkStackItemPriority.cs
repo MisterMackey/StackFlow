@@ -2,7 +2,7 @@
 {
     public enum WorkStackItemPriority
     {
-        Whenever = 0, 
+        Whenever = 0,
         FourWeeks = 1,
         ThreeWeeks = 2,
         TwoWeeks = 3,

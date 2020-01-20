@@ -1,11 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StackFlow.Controllers;
 using StackFlow.Models;
 using StackFlowTests;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace StackFlow.Controllers.Tests
 {

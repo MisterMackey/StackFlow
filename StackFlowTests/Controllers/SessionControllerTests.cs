@@ -1,11 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StackFlow.Controllers;
 using StackFlow.EventArgClasses;
 using StackFlow.Models;
 using StackFlowTests;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StackFlow.Controllers.Tests
 {
@@ -38,9 +34,10 @@ namespace StackFlow.Controllers.Tests
                     new ActiveStackModificationEventArgs()
                     {
                         TypeOfChange = ActiveStackModificationTypes.ItemAdded
-                        ,NewItem = new WorkStackItem($"{i}")
+                        ,
+                        NewItem = new WorkStackItem($"{i}")
                     });
-                Assert.IsTrue(stackz.Count == i+1);
+                Assert.IsTrue(stackz.Count == i + 1);
             }
 
             //nice, lets modify the top and check that the modification went through
@@ -49,18 +46,18 @@ namespace StackFlow.Controllers.Tests
                 {
                     TypeOfChange = ActiveStackModificationTypes.ItemModified,
                     NewItem = new WorkStackItem("MODDED SON")
-                }) ;
+                });
             Assert.AreEqual("MODDED SON", stackz.Peek().Name);
 
             //finally, lets pop a few items and check that they get a closeddate and are put into the completed list on the session
-            for (int i =0; i < 5; i++)
+            for (int i = 0; i < 5; i++)
             {
                 test.InvokeModifyActiveStack(
                         new ActiveStackModificationEventArgs()
                         {
                             TypeOfChange = ActiveStackModificationTypes.ItemCompleted,
                         });
-                Assert.IsTrue(sesh.CompletedItems.Count == i+1);                
+                Assert.IsTrue(sesh.CompletedItems.Count == i + 1);
             }
             Assert.IsTrue(sesh.CompletedItems.TrueForAll(x => x.ClosedDate != null));
             //TODO : tests for floating stack once i figure out how i want that thing to behave in the first place

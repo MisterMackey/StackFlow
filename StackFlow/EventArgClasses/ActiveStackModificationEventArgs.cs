@@ -1,7 +1,5 @@
 ﻿using StackFlow.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StackFlow.EventArgClasses
 {
@@ -20,7 +18,7 @@ namespace StackFlow.EventArgClasses
     {
         public ActiveStackModificationTypes TypeOfChange { get; set; }
         public WorkStackItem NewItem { get; set; }
-        
+
 
     }
 }

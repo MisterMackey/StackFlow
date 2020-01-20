@@ -1,9 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StackFlow.Models;
-using StackFlow.Procedures;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StackFlow.Procedures.Tests
 {
