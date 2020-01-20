@@ -15,10 +15,10 @@ namespace StackFlowTests
     {
         internal StackFlowSession ActiveSession { get; set; }
         public event EventHandler UserClicksInterrupt;
-        public event EventHandler UserModifiesActiveStack;
-        public event EventHandler UserModifiesFloatingStack;
-        public event EventHandler<SessionSaveOrLoadArgs> UserSavesSession;
-        public event EventHandler<SessionSaveOrLoadArgs> UserLoadsSession;
+        public event EventHandler<ActiveStackModificationEventArgs> UserModifiesActiveStack;
+        public event EventHandler<FloatingStackModificationEventArgs> UserModifiesFloatingStack;
+        public event EventHandler<SessionSaveOrLoadEventArgs> UserSavesSession;
+        public event EventHandler<SessionSaveOrLoadEventArgs> UserLoadsSession;
         public event EventHandler<HotKeyRegisterEventArgs> UserRequestsNewHotkey;
         public event EventHandler<HotKeyPressEventArgs> UserPressedHotkey;
         public StackFlowSession GetActiveSession()
@@ -39,13 +39,21 @@ namespace StackFlowTests
         {
             UserPressedHotkey?.Invoke(this, args);
         }
-        public void InvokeSaveSession(SessionSaveOrLoadArgs args)
+        public void InvokeSaveSession(SessionSaveOrLoadEventArgs args)
         {
             UserSavesSession?.Invoke(this, args);
         }
-        public void InvokeLoadSession(SessionSaveOrLoadArgs args)
+        public void InvokeLoadSession(SessionSaveOrLoadEventArgs args)
         {
             UserLoadsSession?.Invoke(this, args);
+        }
+        public void InvokeModifyActiveStack(ActiveStackModificationEventArgs args)
+        {
+            UserModifiesActiveStack?.Invoke(this, args);
+        }
+        public void InvokeModifyFloatingStack(FloatingStackModificationEventArgs args)
+        {
+            UserModifiesFloatingStack?.Invoke(this, args);
         }
     }
 

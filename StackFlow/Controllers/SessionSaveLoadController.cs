@@ -12,14 +12,14 @@ namespace StackFlow.Controllers
             form.UserSavesSession += OnSessionSaveToDisk;
         }
 
-        private void OnSessionLoadFromDisk(object sender, SessionSaveOrLoadArgs e)
+        private void OnSessionLoadFromDisk(object sender, SessionSaveOrLoadEventArgs e)
         {
             string fullPath = $"{e.Folder}\\{e.SessionName}";
             var sesh = Procedures.SessionProcedures.LoadSession(fullPath);
             FormReference.SetActiveSession(sesh);
         }
 
-        private void OnSessionSaveToDisk(object sender, SessionSaveOrLoadArgs e)
+        private void OnSessionSaveToDisk(object sender, SessionSaveOrLoadEventArgs e)
         {
             string fullPath = $"{e.Folder}\\{e.SessionName}";
             var sesh = FormReference.GetActiveSession();

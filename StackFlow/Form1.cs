@@ -21,10 +21,10 @@ namespace StackFlow
         internal StackFlowSession ActiveSession { get; set; }
         #region Events
         public event EventHandler UserClicksInterrupt;
-        public event EventHandler UserModifiesActiveStack;
-        public event EventHandler UserModifiesFloatingStack;
-        public event EventHandler<SessionSaveOrLoadArgs> UserSavesSession;
-        public event EventHandler<SessionSaveOrLoadArgs> UserLoadsSession;
+        public event EventHandler<ActiveStackModificationEventArgs> UserModifiesActiveStack;
+        public event EventHandler<FloatingStackModificationEventArgs> UserModifiesFloatingStack;
+        public event EventHandler<SessionSaveOrLoadEventArgs> UserSavesSession;
+        public event EventHandler<SessionSaveOrLoadEventArgs> UserLoadsSession;
         //window handle, key, keyId, modifier
         public event EventHandler<HotKeyRegisterEventArgs> UserRequestsNewHotkey;
         public event EventHandler<HotKeyPressEventArgs> UserPressedHotkey;

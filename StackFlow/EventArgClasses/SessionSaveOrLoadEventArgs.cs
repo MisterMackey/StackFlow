@@ -4,7 +4,7 @@ using System.Text;
 
 namespace StackFlow.EventArgClasses
 {
-    public class SessionSaveOrLoadArgs : EventArgs
+    public class SessionSaveOrLoadEventArgs : EventArgs
     {
         public string SessionName { get; set; }
         public string Folder { get; set; }
