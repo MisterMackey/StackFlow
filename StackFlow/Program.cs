@@ -1,4 +1,4 @@
-using StackFlow.Controllers;
+
 using System;
 using System.Windows.Forms;
 
@@ -15,7 +15,7 @@ namespace StackFlow
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1(new AggregateController()));
+            Application.Run(new Form1());
         }
     }
 }
