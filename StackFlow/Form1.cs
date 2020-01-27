@@ -33,6 +33,7 @@ namespace StackFlow
             //probably trigger save event here?
             ActiveSession = Session;
         }
+        public GroupBox ActiveStack { get => this.GroupBoxActiveStack; }
         #endregion
         public Form1(IController controller)
         {
@@ -116,6 +117,7 @@ namespace StackFlow
         private WorkStackItem GetUserInputNewItem()
         {
             throw new NotImplementedException();
+            
         }
         private void ButtonPopClick(object sender, EventArgs e)
         {
