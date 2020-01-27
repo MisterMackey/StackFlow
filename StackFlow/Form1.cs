@@ -12,7 +12,7 @@ namespace StackFlow
         private readonly int PutThisFormToForeGround;
         internal StackFlowSession ActiveSession { get; set; }
         #region Events
-        public event EventHandler UserClicksInterrupt;
+        public event EventHandler<WorkInterruptionEventArgs> UserClicksInterrupt;
         public event EventHandler<ActiveStackModificationEventArgs> UserModifiesActiveStack;
         public event EventHandler<FloatingStackModificationEventArgs> UserModifiesFloatingStack;
         public event EventHandler<SessionSaveOrLoadEventArgs> UserSavesSession;

@@ -1,4 +1,5 @@
 ﻿using StackFlow.Models;
+using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -21,6 +22,15 @@ namespace StackFlow.Procedures
             formatter.Serialize(stream, session);
             stream.Close();
         }
+
+        public static void AddNewWorkStack(StackFlowSession parentSession, string nameOfNewStack, string descriptionOfNewStack)
+        {
+            WorkStack newStack = new WorkStack(nameOfNewStack, descriptionOfNewStack);
+            parentSession.Session.Add(newStack);
+            parentSession.ActiveStack = newStack;
+            newStack.Push(new WorkStackItem("RootItem", "Default Item", WorkStackItemPriority.Whenever));
+        }
+
         public static StackFlowSession LoadSession(string filepath)
         {
             Stream stream;

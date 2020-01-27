@@ -62,5 +62,20 @@ namespace StackFlow.Controllers.Tests
             Assert.IsTrue(sesh.CompletedItems.TrueForAll(x => x.ClosedDate != null));
             //TODO : tests for floating stack once i figure out how i want that thing to behave in the first place
         }
+        [TestMethod()]
+        public void SessionInterruptTest()
+        {
+            var test = new TestForm();
+            var controller = new SessionController();
+            controller.Initialize(test);
+            test.SetActiveSession(new StackFlowSession());
+            //session should be emtpy
+            Assert.IsTrue(test.GetActiveSession().Session.Count == 0);
+            //invoke the interrupt, which should trigger the creation of a new workstack
+            test.InvokeUserInterrupt(new WorkInterruptionEventArgs() { NameOfNewStack = "test", DescriptionOfNewStack ="teststtes"});
+            //verify that one stack is created and its the active stack.
+            Assert.IsTrue(test.GetActiveSession().ActiveStack.Name == "test");
+            Assert.IsTrue(test.GetActiveSession().Session.Count == 1);
+        }
     }
 }

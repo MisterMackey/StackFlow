@@ -18,6 +18,7 @@
             //add new controllers here for default set
             new HotKeyController()
             ,new SessionSaveLoadController()
+            ,new SessionController()
         })
         {
 

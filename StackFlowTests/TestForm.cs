@@ -12,7 +12,7 @@ namespace StackFlowTests
     partial class TestForm : Form, IStackFlowForm
     {
         internal StackFlowSession ActiveSession { get; set; }
-        public event EventHandler UserClicksInterrupt;
+        public event EventHandler<WorkInterruptionEventArgs> UserClicksInterrupt;
         public event EventHandler<ActiveStackModificationEventArgs> UserModifiesActiveStack;
         public event EventHandler<FloatingStackModificationEventArgs> UserModifiesFloatingStack;
         public event EventHandler<SessionSaveOrLoadEventArgs> UserSavesSession;
@@ -52,6 +52,10 @@ namespace StackFlowTests
         public void InvokeModifyFloatingStack(FloatingStackModificationEventArgs args)
         {
             UserModifiesFloatingStack?.Invoke(this, args);
+        }
+        public void InvokeUserInterrupt(WorkInterruptionEventArgs args)
+        {
+            UserClicksInterrupt?.Invoke(this ,args);
         }
     }
 

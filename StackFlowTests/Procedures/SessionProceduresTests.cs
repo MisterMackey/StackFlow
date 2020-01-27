@@ -43,6 +43,14 @@ namespace StackFlow.Procedures.Tests
             }
         }
 
+        [TestMethod()]
+        public void AddNewWorkStackTest()
+        {
+            StackFlowSession sesh = new StackFlowSession();
+            SessionProcedures.AddNewWorkStack(sesh, "new", "lololol");
+            Assert.IsTrue(sesh.Session.Count == 1);
+            Assert.IsTrue(sesh.ActiveStack.Name == "new");
+        }
 
     }
 }

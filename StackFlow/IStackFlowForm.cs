@@ -6,7 +6,7 @@ namespace StackFlow
 {
     public interface IStackFlowForm
     {
-        public event EventHandler UserClicksInterrupt;
+        public event EventHandler<WorkInterruptionEventArgs> UserClicksInterrupt;
         public event EventHandler<ActiveStackModificationEventArgs> UserModifiesActiveStack;
         public event EventHandler<FloatingStackModificationEventArgs> UserModifiesFloatingStack;
         public event EventHandler<SessionSaveOrLoadEventArgs> UserSavesSession;
