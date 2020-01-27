@@ -6,6 +6,7 @@ namespace StackFlow.Models
     [Serializable]
     public class StackFlowSession
     {
+        public string Name { get; set; }
         public StackFlowSession()
         {
             Session = new List<WorkStack>();

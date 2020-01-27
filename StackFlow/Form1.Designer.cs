@@ -101,7 +101,6 @@
             this.ButtonInterrupt.TabIndex = 0;
             this.ButtonInterrupt.Text = "Interrupt";
             this.ButtonInterrupt.UseVisualStyleBackColor = true;
-            this.ButtonInterrupt.Click += new System.EventHandler(this.ButtonInterrupt_Click);
             // 
             // ButtonModify
             // 
