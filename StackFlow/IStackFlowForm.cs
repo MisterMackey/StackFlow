@@ -1,6 +1,7 @@
 ﻿using StackFlow.EventArgClasses;
 using StackFlow.Models;
 using System;
+using System.Windows.Forms;
 
 namespace StackFlow
 {
@@ -24,5 +25,6 @@ namespace StackFlow
         /// </summary>
         /// <param name=""></param>
         void SetActiveSession(StackFlowSession Session);
+        public GroupBox ActiveStack { get; }
     }
 }

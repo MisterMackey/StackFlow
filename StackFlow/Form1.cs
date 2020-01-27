@@ -71,12 +71,6 @@ namespace StackFlow
             GroupBoxActiveStack.ControlRemoved += GroupBoxActiveStackControlsUpdated;
         }
 
-
-        private WorkStackItem GetUserInputNewItem()
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
         /// Method to intercept global hotkeys pressed when stackflow is not focused
         /// </summary>
@@ -107,7 +101,7 @@ namespace StackFlow
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
             saveFileDialog.Filter = "*.dat";
-            saveFileDialog.Title = "Save session";
+            saveFileDialog.Title = "Save/Load session";
             saveFileDialog.FileName = GetActiveSession().Name;
             DialogResult result = saveFileDialog.ShowDialog();
             if (result == DialogResult.OK)
@@ -119,7 +113,10 @@ namespace StackFlow
             }
             else { return null; }
         }
-
+        private WorkStackItem GetUserInputNewItem()
+        {
+            throw new NotImplementedException();
+        }
         private void ButtonPopClick(object sender, EventArgs e)
         {
             ActiveStackModificationEventArgs a = new ActiveStackModificationEventArgs();
@@ -145,20 +142,28 @@ namespace StackFlow
             else
             {
                 UserSavesSession?.Invoke(sender, a);
-            }
-
-            
+            }            
         }
-
 
         private void ButtonLoadClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            SessionSaveOrLoadEventArgs a;
+            if ((a = GetUserInputSaveOrLoad()) == null)
+            {
+                return;
+            }
+            else
+            {
+                UserLoadsSession?.Invoke(sender, a);
+            }
         }
 
         private void ButtonModifyClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            ActiveStackModificationEventArgs a = new ActiveStackModificationEventArgs();
+            a.TypeOfChange = ActiveStackModificationTypes.ItemChanged;
+            a.NewItem = GetUserInputNewItem();
+            UserModifiesActiveStack?.Invoke(sender, a);
         }
 
         private void ButtonInterruptClick(object sender, EventArgs e)
