@@ -79,6 +79,9 @@ namespace StackFlow
             base.WndProc(ref m);
         }
 
+        private void ButtonInterrupt_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }
