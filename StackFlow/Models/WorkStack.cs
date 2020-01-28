@@ -20,6 +20,7 @@ namespace StackFlow.Models
                 else { return WorkStackItemPriority.FourWeeks; }
             }
         }
+        public List<WorkStackItem> CompletedItems { get; }
         #region Interface
 
         public IEnumerator<WorkStackItem> GetEnumerator()
@@ -175,6 +176,7 @@ namespace StackFlow.Models
             this.Name = Name;
             this.Description = Description;
             m_Stack = new Stack<WorkStackItem>();
+            CompletedItems = new List<WorkStackItem>();
         }
         #endregion
 

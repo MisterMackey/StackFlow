@@ -9,6 +9,7 @@ namespace StackFlow.Procedures
         {
             var CompletedItem = Stack.Pop();
             CompletedItem.ClosedDate = DateTime.Now;
+            Stack.CompletedItems.Add(CompletedItem);
             return CompletedItem;
         }
 

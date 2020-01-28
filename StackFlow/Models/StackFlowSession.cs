@@ -10,7 +10,7 @@ namespace StackFlow.Models
         public StackFlowSession()
         {
             Session = new List<WorkStack>();
-            CompletedItems = new List<WorkStackItem>();
+            CompletedStacks = new List<WorkStack>();
             FloatingStack = new WorkStack("Default Floating Stack", "");
             ActiveStack = new WorkStack("Default Active Stack", "");
         }
@@ -30,6 +30,6 @@ namespace StackFlow.Models
         /// <summary>
         /// holds items that were completed during the session
         /// </summary>
-        public List<WorkStackItem> CompletedItems { get; set; }
+        public List<WorkStack> CompletedStacks { get; set; }
     }
 }
