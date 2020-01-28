@@ -160,8 +160,11 @@ namespace StackFlow
         {
             SupportingForms.NewItemInputForm input = new SupportingForms.NewItemInputForm();
             input.ShowDialog();
-
-            
+            if (input.DialogResult == DialogResult.OK)
+            {
+                return new WorkStackItem(Name: input.NameResult, Description: input.DescriptionResult, Priority: input.PriorityResult);
+            }
+            else return null;
         }
         private void ButtonPopClick(object sender, EventArgs e)
         {
@@ -174,7 +177,10 @@ namespace StackFlow
         {
             ActiveStackModificationEventArgs a = new ActiveStackModificationEventArgs();
             a.TypeOfChange = ActiveStackModificationTypes.ItemAdded;
-            a.NewItem = GetUserInputNewItem();
+            if ((a.NewItem = GetUserInputNewItem()) == null)
+            {
+                return;
+            }
             UserModifiesActiveStack?.Invoke(sender, a);
         }
 
@@ -208,7 +214,10 @@ namespace StackFlow
         {
             ActiveStackModificationEventArgs a = new ActiveStackModificationEventArgs();
             a.TypeOfChange = ActiveStackModificationTypes.ItemChanged;
-            a.NewItem = GetUserInputNewItem();
+            if ((a.NewItem = GetUserInputNewItem()) == null)
+            {
+                return;
+            }
             UserModifiesActiveStack?.Invoke(sender, a);
         }
 

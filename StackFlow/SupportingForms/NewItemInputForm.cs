@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StackFlow.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,6 +18,10 @@ namespace StackFlow.SupportingForms
             ListBoxPriority.Items.AddRange(FillPrioItems());
             KeyPress += CloseOnEnter;
         }
+        public string NameResult { get => TextBoxName.Text; }
+        public string DescriptionResult { get => RichTextBoxDescription.Text; }
+        public WorkStackItemPriority PriorityResult { get => (WorkStackItemPriority)ListBoxPriority.SelectedItem; }
+
 
         private void CloseOnEnter(object sender, KeyPressEventArgs e)
         {
