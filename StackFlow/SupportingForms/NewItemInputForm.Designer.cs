@@ -33,6 +33,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.ListBoxPriority = new System.Windows.Forms.ListBox();
             this.RichTextBoxDescription = new System.Windows.Forms.RichTextBox();
+            this.ButtonOk = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // TextBoxName
@@ -67,21 +68,31 @@
             this.ListBoxPriority.Location = new System.Drawing.Point(352, 38);
             this.ListBoxPriority.Name = "ListBoxPriority";
             this.ListBoxPriority.Size = new System.Drawing.Size(80, 109);
-            this.ListBoxPriority.TabIndex = 3;
+            this.ListBoxPriority.TabIndex = 2;
             // 
             // RichTextBoxDescription
             // 
             this.RichTextBoxDescription.Location = new System.Drawing.Point(13, 89);
             this.RichTextBoxDescription.Name = "RichTextBoxDescription";
             this.RichTextBoxDescription.Size = new System.Drawing.Size(316, 87);
-            this.RichTextBoxDescription.TabIndex = 4;
+            this.RichTextBoxDescription.TabIndex = 1;
             this.RichTextBoxDescription.Text = "";
+            // 
+            // ButtonOk
+            // 
+            this.ButtonOk.Location = new System.Drawing.Point(352, 153);
+            this.ButtonOk.Name = "ButtonOk";
+            this.ButtonOk.Size = new System.Drawing.Size(75, 23);
+            this.ButtonOk.TabIndex = 4;
+            this.ButtonOk.Text = "Okay";
+            this.ButtonOk.UseVisualStyleBackColor = true;
             // 
             // NewItemInputForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(444, 188);
+            this.Controls.Add(this.ButtonOk);
             this.Controls.Add(this.ListBoxPriority);
             this.Controls.Add(this.RichTextBoxDescription);
             this.Controls.Add(this.label2);
@@ -101,5 +112,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox ListBoxPriority;
         private System.Windows.Forms.RichTextBox RichTextBoxDescription;
+        private System.Windows.Forms.Button ButtonOk;
     }
 }
