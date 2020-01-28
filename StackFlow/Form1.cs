@@ -2,7 +2,9 @@
 using StackFlow.EventArgClasses;
 using StackFlow.Models;
 using System;
+using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace StackFlow
@@ -11,6 +13,7 @@ namespace StackFlow
     {
         private readonly IController _controller;
         private readonly int PutThisFormToForeGround;
+        private const int ItemsVisibleInActiveStack = 10;
         internal StackFlowSession ActiveSession { get; set; }
         #region Events
         public event EventHandler<WorkInterruptionEventArgs> UserClicksInterrupt;
@@ -32,6 +35,10 @@ namespace StackFlow
         {
             //probably trigger save event here?
             ActiveSession = Session;
+        }
+        public void UpdateSessionFull()
+        {
+            UpdateActiveStackControl();
         }
         public GroupBox ActiveStack { get => this.GroupBoxActiveStack; }
         #endregion
@@ -67,9 +74,7 @@ namespace StackFlow
             ButtonLoad.Click += ButtonLoadClick;
             ButtonSave.Click += ButtonSaveClick;
             ButtonPush.Click += ButtonPushClick;
-            ButtonPop.Click += ButtonPopClick;
-            GroupBoxActiveStack.ControlAdded += GroupBoxActiveStackControlsUpdated;
-            GroupBoxActiveStack.ControlRemoved += GroupBoxActiveStackControlsUpdated;
+            ButtonPop.Click += ButtonPopClick;            
         }
 
         /// <summary>
@@ -92,9 +97,46 @@ namespace StackFlow
         }
 
         #region EventHandlers
-        private void GroupBoxActiveStackControlsUpdated(object sender, ControlEventArgs e)
+        private void UpdateActiveStackControl()
         {
-            throw new NotImplementedException(); //should be some method to re-draw the contents of the stack
+            var controls = GroupBoxActiveStack.Controls;
+            foreach (var c in controls)
+            {
+                Control ct = c as Control;
+                ct.Dispose();
+            }
+            controls.Clear();
+            //get the desired contents
+            var sauce = GetActiveSession().ActiveStack.ToArray();
+            PictureBox[] pictureBoxes = new PictureBox[sauce.Length];
+            for (int i = 0; i < sauce.Length; i++)
+            {
+                var box = new PictureBox();
+                box.Visible = false;
+                Label boxLabel = new Label();
+                boxLabel.Text = sauce[i].Name;
+                box.Controls.Add(boxLabel);
+                Size size = new Size(GroupBoxActiveStack.Width, GroupBoxActiveStack.Height / ItemsVisibleInActiveStack);
+                box.Size = size;
+                pictureBoxes[i] = box;
+            }
+            PictureBox[] visibleBoxes;
+            if (pictureBoxes.Length <= ItemsVisibleInActiveStack)
+            {
+                visibleBoxes = pictureBoxes;
+            }
+            else
+            {
+                visibleBoxes = new PictureBox[10];
+                pictureBoxes.CopyTo(visibleBoxes, pictureBoxes.Length - ItemsVisibleInActiveStack);
+            }
+            for (int i = 0; i < visibleBoxes.Length; i++)
+            {
+                visibleBoxes[i].Visible = true;
+                visibleBoxes[i].Left = 0;
+                visibleBoxes[i].Top = i * (GroupBoxActiveStack.Height / ItemsVisibleInActiveStack);
+            }
+            GroupBoxActiveStack.Controls.AddRange(pictureBoxes);
         }
         private SessionSaveOrLoadEventArgs GetUserInputSaveOrLoad()
         {
@@ -116,7 +158,9 @@ namespace StackFlow
         }
         private WorkStackItem GetUserInputNewItem()
         {
-            throw new NotImplementedException();
+            SupportingForms.NewItemInputForm input = new SupportingForms.NewItemInputForm();
+            input.ShowDialog();
+
             
         }
         private void ButtonPopClick(object sender, EventArgs e)
