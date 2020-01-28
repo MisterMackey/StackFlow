@@ -36,6 +36,7 @@
             this.PictureBoxActiveStackBase = new System.Windows.Forms.PictureBox();
             this.ButtonInterrupt = new System.Windows.Forms.Button();
             this.ButtonModify = new System.Windows.Forms.Button();
+            this.LabelTitleActiveStack = new System.Windows.Forms.Label();
             this.GroupBoxActiveStack.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxActiveStackBase)).BeginInit();
             this.SuspendLayout();
@@ -111,11 +112,21 @@
             this.ButtonModify.Text = "Modify";
             this.ButtonModify.UseVisualStyleBackColor = true;
             // 
+            // LabelTitleActiveStack
+            // 
+            this.LabelTitleActiveStack.AutoSize = true;
+            this.LabelTitleActiveStack.Location = new System.Drawing.Point(590, 9);
+            this.LabelTitleActiveStack.Name = "LabelTitleActiveStack";
+            this.LabelTitleActiveStack.Size = new System.Drawing.Size(97, 15);
+            this.LabelTitleActiveStack.TabIndex = 2;
+            this.LabelTitleActiveStack.Text = "Title Active Stack";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 701);
+            this.Controls.Add(this.LabelTitleActiveStack);
             this.Controls.Add(this.ButtonModify);
             this.Controls.Add(this.ButtonInterrupt);
             this.Controls.Add(this.GroupBoxActiveStack);
@@ -128,6 +139,7 @@
             this.GroupBoxActiveStack.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxActiveStackBase)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -141,6 +153,7 @@
         private System.Windows.Forms.PictureBox PictureBoxActiveStackBase;
         private System.Windows.Forms.Button ButtonInterrupt;
         private System.Windows.Forms.Button ButtonModify;
+        private System.Windows.Forms.Label LabelTitleActiveStack;
     }
 }
 

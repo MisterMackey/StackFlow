@@ -57,6 +57,11 @@ namespace StackFlowTests
         {
             UserClicksInterrupt?.Invoke(this ,args);
         }
+        public void UpdateSessionFull()
+        {
+
+        }
+        public GroupBox ActiveStack { get; set; }
     }
 
 }

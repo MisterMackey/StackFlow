@@ -60,6 +60,7 @@ namespace StackFlow.Controllers
                     throw new NotImplementedException("changed items not on top of stcak not supported");
                     break;
             }
+            FormReference.UpdateSessionFull();
         }
     }
 }

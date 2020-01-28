@@ -17,7 +17,15 @@ namespace StackFlow.SupportingForms
             TextBoxName.Focus();
             ListBoxPriority.Items.AddRange(FillPrioItems());
             KeyPress += CloseOnEnter;
+            ButtonOk.Click += CloseOnOk;
         }
+        public NewItemInputForm(WorkStackItemPriority defaultPriority) : this()
+        {
+            ListBoxPriority.SelectedItem = defaultPriority;
+        }
+
+
+
         public string NameResult { get => TextBoxName.Text; }
         public string DescriptionResult { get => RichTextBoxDescription.Text; }
         public WorkStackItemPriority PriorityResult { get => (WorkStackItemPriority)ListBoxPriority.SelectedItem; }
@@ -35,6 +43,12 @@ namespace StackFlow.SupportingForms
                 DialogResult = DialogResult.Cancel;
                 Close();
             }
+        }
+
+        private void CloseOnOk(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
         private object[] FillPrioItems()

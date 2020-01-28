@@ -11,7 +11,8 @@ namespace StackFlow.Models
         {
             Session = new List<WorkStack>();
             CompletedItems = new List<WorkStackItem>();
-
+            FloatingStack = new WorkStack("Default Floating Stack", "");
+            ActiveStack = new WorkStack("Default Active Stack", "");
         }
         /// <summary>
         /// Holds all the workstacks except the floating stack

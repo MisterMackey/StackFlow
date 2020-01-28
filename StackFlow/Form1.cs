@@ -65,6 +65,8 @@ namespace StackFlow
             ,
                 Action = HotKeyableActions.BringToForeground
             });
+            SetActiveSession(new StackFlowSession() { Name = "DefaultSession" });
+            UpdateSessionFull();
         }
 
         private void BindEventHandlers()
@@ -137,28 +139,54 @@ namespace StackFlow
                 visibleBoxes[i].Top = i * (GroupBoxActiveStack.Height / ItemsVisibleInActiveStack);
             }
             GroupBoxActiveStack.Controls.AddRange(pictureBoxes);
+            LabelTitleActiveStack.Text = GetActiveSession().ActiveStack.Name;
         }
-        private SessionSaveOrLoadEventArgs GetUserInputSaveOrLoad()
+        private SessionSaveOrLoadEventArgs GetUserInputSaveOrLoad(bool save)
         {
-            SessionSaveOrLoadEventArgs ret = new SessionSaveOrLoadEventArgs();
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
-            saveFileDialog.Filter = "*.dat";
-            saveFileDialog.Title = "Save/Load session";
-            saveFileDialog.FileName = GetActiveSession().Name;
-            DialogResult result = saveFileDialog.ShowDialog();
-            if (result == DialogResult.OK)
+            if (save)
             {
-                FileInfo info = new FileInfo(saveFileDialog.FileName);
-                ret.Folder = info.DirectoryName;
-                ret.SessionName = info.Name;
-                return ret;
+                SessionSaveOrLoadEventArgs ret = new SessionSaveOrLoadEventArgs();
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
+                saveFileDialog.Filter = ".dat files (default StackFlow format)|*.dat";
+                saveFileDialog.Title = "Save/Load session";
+                saveFileDialog.FileName = GetActiveSession().Name;
+                DialogResult result = saveFileDialog.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    FileInfo info = new FileInfo(saveFileDialog.FileName);
+                    ret.Folder = info.DirectoryName;
+                    ret.SessionName = info.Name;
+                    return ret;
+                }
+                else { return null; }
             }
-            else { return null; }
+            else
+            {
+                SessionSaveOrLoadEventArgs ret = new SessionSaveOrLoadEventArgs();
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+                openFileDialog.Filter = ".dat files (default StackFlow format)|*.dat";
+                openFileDialog.Title = "Save/Load session";
+                openFileDialog.FileName = GetActiveSession().Name;
+                DialogResult result = openFileDialog.ShowDialog();
+
+                if (result == DialogResult.OK)
+                {
+                    FileInfo info = new FileInfo(openFileDialog.FileName);
+                    ret.Folder = info.DirectoryName;
+                    ret.SessionName = info.Name;
+                    return ret;
+                }
+                else { return null; }
+            }
+            
         }
         private WorkStackItem GetUserInputNewItem()
         {
-            SupportingForms.NewItemInputForm input = new SupportingForms.NewItemInputForm();
+            WorkStackItemPriority defaultPrio = GetActiveSession().ActiveStack.Priority;
+            SupportingForms.NewItemInputForm input = new SupportingForms.NewItemInputForm(defaultPrio);
             input.ShowDialog();
             if (input.DialogResult == DialogResult.OK)
             {
@@ -187,7 +215,7 @@ namespace StackFlow
         private void ButtonSaveClick(object sender, EventArgs e)
         {
             SessionSaveOrLoadEventArgs a;
-            if ((a = GetUserInputSaveOrLoad()) == null)
+            if ((a = GetUserInputSaveOrLoad(true)) == null)
             {
                 return;
             }
@@ -200,7 +228,7 @@ namespace StackFlow
         private void ButtonLoadClick(object sender, EventArgs e)
         {
             SessionSaveOrLoadEventArgs a;
-            if ((a = GetUserInputSaveOrLoad()) == null)
+            if ((a = GetUserInputSaveOrLoad(false)) == null)
             {
                 return;
             }
@@ -213,7 +241,7 @@ namespace StackFlow
         private void ButtonModifyClick(object sender, EventArgs e)
         {
             ActiveStackModificationEventArgs a = new ActiveStackModificationEventArgs();
-            a.TypeOfChange = ActiveStackModificationTypes.ItemChanged;
+            a.TypeOfChange = ActiveStackModificationTypes.ItemModified;
             if ((a.NewItem = GetUserInputNewItem()) == null)
             {
                 return;

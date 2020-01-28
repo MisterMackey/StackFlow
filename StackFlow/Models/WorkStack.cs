@@ -13,8 +13,12 @@ namespace StackFlow.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public WorkStackItemPriority Priority
-        {
-            get { return m_Stack.Max(x => x.Priority); }
+        {            
+            get 
+            { 
+                if (m_Stack.Any()) { return m_Stack.Max(x => x.Priority); }
+                else { return WorkStackItemPriority.FourWeeks; }
+            }
         }
         #region Interface
 

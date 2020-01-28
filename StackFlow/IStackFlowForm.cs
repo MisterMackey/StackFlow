@@ -26,5 +26,6 @@ namespace StackFlow
         /// <param name=""></param>
         void SetActiveSession(StackFlowSession Session);
         public GroupBox ActiveStack { get; }
+        public void UpdateSessionFull();
     }
 }

@@ -17,6 +17,7 @@ namespace StackFlow.Controllers
             string fullPath = $"{e.Folder}\\{e.SessionName}";
             var sesh = Procedures.SessionProcedures.LoadSession(fullPath);
             FormReference.SetActiveSession(sesh);
+            FormReference.UpdateSessionFull();
         }
 
         private void OnSessionSaveToDisk(object sender, SessionSaveOrLoadEventArgs e)
