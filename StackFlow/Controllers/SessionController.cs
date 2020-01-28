@@ -18,7 +18,8 @@ namespace StackFlow.Controllers
         private void OnUserInterrupt(object sender, WorkInterruptionEventArgs e)
         {
             var sesh = FormReference.GetActiveSession();
-            SessionProcedures.AddNewWorkStack(sesh, e.NameOfNewStack, e.DescriptionOfNewStack);
+            SessionProcedures.AddNewWorkStack(sesh, e.NameOfNewStack, e.DescriptionOfNewStack, true);
+            FormReference.UpdateSessionFull();
         }
 
         private void OnFloatingStackModification(object sender, FloatingStackModificationEventArgs e)

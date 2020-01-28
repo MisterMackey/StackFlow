@@ -24,6 +24,7 @@ namespace StackFlow.Controllers
         {
             string fullPath = $"{e.Folder}\\{e.SessionName}";
             var sesh = FormReference.GetActiveSession();
+            sesh.Name = e.SessionName;
             Procedures.SessionProcedures.SaveSession(fullPath, sesh);
         }
     }

@@ -37,6 +37,7 @@
             this.ButtonInterrupt = new System.Windows.Forms.Button();
             this.ButtonModify = new System.Windows.Forms.Button();
             this.LabelTitleActiveStack = new System.Windows.Forms.Label();
+            this.ListViewSessionInactiveStacks = new System.Windows.Forms.ListView();
             this.GroupBoxActiveStack.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBoxActiveStackBase)).BeginInit();
             this.SuspendLayout();
@@ -121,11 +122,21 @@
             this.LabelTitleActiveStack.TabIndex = 2;
             this.LabelTitleActiveStack.Text = "Title Active Stack";
             // 
+            // ListViewSessionInactiveStacks
+            // 
+            this.ListViewSessionInactiveStacks.HideSelection = false;
+            this.ListViewSessionInactiveStacks.Location = new System.Drawing.Point(12, 33);
+            this.ListViewSessionInactiveStacks.Name = "ListViewSessionInactiveStacks";
+            this.ListViewSessionInactiveStacks.Size = new System.Drawing.Size(168, 553);
+            this.ListViewSessionInactiveStacks.TabIndex = 3;
+            this.ListViewSessionInactiveStacks.UseCompatibleStateImageBehavior = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 701);
+            this.Controls.Add(this.ListViewSessionInactiveStacks);
             this.Controls.Add(this.LabelTitleActiveStack);
             this.Controls.Add(this.ButtonModify);
             this.Controls.Add(this.ButtonInterrupt);
@@ -154,6 +165,7 @@
         private System.Windows.Forms.Button ButtonInterrupt;
         private System.Windows.Forms.Button ButtonModify;
         private System.Windows.Forms.Label LabelTitleActiveStack;
+        private System.Windows.Forms.ListView ListViewSessionInactiveStacks;
     }
 }
 

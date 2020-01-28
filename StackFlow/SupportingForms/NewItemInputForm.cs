@@ -16,8 +16,9 @@ namespace StackFlow.SupportingForms
             InitializeComponent();
             TextBoxName.Focus();
             ListBoxPriority.Items.AddRange(FillPrioItems());
-            KeyPress += CloseOnEnter;
+            KeyUp += CloseOnEnter;
             ButtonOk.Click += CloseOnOk;
+            KeyPreview = true;
         }
         public NewItemInputForm(WorkStackItemPriority defaultPriority) : this()
         {
@@ -31,14 +32,14 @@ namespace StackFlow.SupportingForms
         public WorkStackItemPriority PriorityResult { get => (WorkStackItemPriority)ListBoxPriority.SelectedItem; }
 
 
-        private void CloseOnEnter(object sender, KeyPressEventArgs e)
+        private void CloseOnEnter(object sender, KeyEventArgs e)
         {
-            if (e.KeyChar == (char)Keys.Enter)
+            if (e.KeyCode == Keys.Enter && (e.Modifiers & Keys.Modifiers) == Keys.None)
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
-            else if (e.KeyChar == (char)Keys.Escape)
+            else if (e.KeyCode == Keys.Escape)
             {
                 DialogResult = DialogResult.Cancel;
                 Close();

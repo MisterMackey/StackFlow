@@ -2,6 +2,7 @@
 using StackFlow.EventArgClasses;
 using StackFlow.Models;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -39,6 +40,8 @@ namespace StackFlow
         public void UpdateSessionFull()
         {
             UpdateActiveStackControl();
+            UpdateInactiveStackControl();
+            Text = $"StackFlow - {GetActiveSession().Name}";
         }
         public GroupBox ActiveStack { get => this.GroupBoxActiveStack; }
         #endregion
@@ -66,6 +69,11 @@ namespace StackFlow
                 Action = HotKeyableActions.BringToForeground
             });
             SetActiveSession(new StackFlowSession() { Name = "DefaultSession" });
+            ListViewSessionInactiveStacks.Scrollable = true;
+            ListViewSessionInactiveStacks.View = View.Details;
+            //-2 = autosize
+            ListViewSessionInactiveStacks.Columns.Add("Stacks", -2, HorizontalAlignment.Center);
+            ListViewSessionInactiveStacks.FullRowSelect = true;
             UpdateSessionFull();
         }
 
@@ -76,7 +84,7 @@ namespace StackFlow
             ButtonLoad.Click += ButtonLoadClick;
             ButtonSave.Click += ButtonSaveClick;
             ButtonPush.Click += ButtonPushClick;
-            ButtonPop.Click += ButtonPopClick;            
+            ButtonPop.Click += ButtonPopClick;    
         }
 
         /// <summary>
@@ -140,6 +148,21 @@ namespace StackFlow
             }
             GroupBoxActiveStack.Controls.AddRange(pictureBoxes);
             LabelTitleActiveStack.Text = GetActiveSession().ActiveStack.Name;
+        }
+        private void UpdateInactiveStackControl()
+        {
+            ListViewSessionInactiveStacks.Items.Clear();
+            List<ListViewItem> stacks = new List<ListViewItem>();
+            string activeStackName = GetActiveSession().ActiveStack.Name;
+            int i = 0;
+            foreach (var stack in GetActiveSession().Session)
+            {
+                if (stack.Name != activeStackName)
+                {
+                    stacks.Add(new ListViewItem(stack.Name));
+                }
+            }
+            ListViewSessionInactiveStacks.Items.AddRange(stacks.ToArray());
         }
         private SessionSaveOrLoadEventArgs GetUserInputSaveOrLoad(bool save)
         {
@@ -251,7 +274,12 @@ namespace StackFlow
 
         private void ButtonInterruptClick(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            WorkInterruptionEventArgs a = new WorkInterruptionEventArgs();
+            var input = GetUserInputNewItem();
+            if (input == null) { return; }
+            a.DescriptionOfNewStack = input.Description;
+            a.NameOfNewStack = input.Name;
+            UserClicksInterrupt?.Invoke(sender, a);
         }
         #endregion
 

@@ -23,11 +23,14 @@ namespace StackFlow.Procedures
             stream.Close();
         }
 
-        public static void AddNewWorkStack(StackFlowSession parentSession, string nameOfNewStack, string descriptionOfNewStack)
+        public static void AddNewWorkStack(StackFlowSession parentSession, string nameOfNewStack, string descriptionOfNewStack, bool setActive)
         {
             WorkStack newStack = new WorkStack(nameOfNewStack, descriptionOfNewStack);
             parentSession.Session.Add(newStack);
-            parentSession.ActiveStack = newStack;
+            if (setActive)
+            {
+                parentSession.ActiveStack = newStack; 
+            }
             newStack.Push(new WorkStackItem("RootItem", "Default Item", WorkStackItemPriority.Whenever));
         }
 
