@@ -45,8 +45,7 @@ namespace StackFlow.Controllers
                     WorkStackProcedures.AddNewTask(e.NewItem, FormReference.GetActiveSession().ActiveStack);
                     break;
                 case ActiveStackModificationTypes.ItemCompleted:
-                    var CompletedItem = WorkStackProcedures.CompleteTopItem(stackToModify);
-                    FormReference.GetActiveSession().CompletedItems.Add(CompletedItem);
+                    var CompletedItem = WorkStackProcedures.CompleteTopItem(stackToModify);                    
                     break;
                 case ActiveStackModificationTypes.ItemModified:
                     WorkStackProcedures.ModifyTop(e.NewItem, FormReference.GetActiveSession().ActiveStack);

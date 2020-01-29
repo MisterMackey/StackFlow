@@ -57,9 +57,9 @@ namespace StackFlow.Controllers.Tests
                         {
                             TypeOfChange = ActiveStackModificationTypes.ItemCompleted,
                         });
-                Assert.IsTrue(sesh.CompletedItems.Count == i + 1);
+                Assert.IsTrue(stackz.CompletedItems.Count == i + 1);
             }
-            Assert.IsTrue(sesh.CompletedItems.TrueForAll(x => x.ClosedDate != null));
+            Assert.IsTrue(stackz.CompletedItems.TrueForAll(x => x.ClosedDate != null));
             //TODO : tests for floating stack once i figure out how i want that thing to behave in the first place
         }
         [TestMethod()]

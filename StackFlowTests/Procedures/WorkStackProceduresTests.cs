@@ -16,6 +16,7 @@ namespace StackFlow.Procedures.Tests
             Assert.IsTrue(test.Count == 0);
             Assert.AreSame(retrieved, testitem);
             Assert.IsNotNull(retrieved.ClosedDate); //should be filled since we 'completed' it via the procedure
+            Assert.IsTrue(test.CompletedItems.Contains(testitem));
         }
 
         [TestMethod()]

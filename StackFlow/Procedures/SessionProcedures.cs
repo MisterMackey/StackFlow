@@ -27,12 +27,17 @@ namespace StackFlow.Procedures
         public static void AddNewWorkStack(StackFlowSession parentSession, string nameOfNewStack, string descriptionOfNewStack, bool setActive)
         {
             WorkStack newStack = new WorkStack(nameOfNewStack, descriptionOfNewStack);
+            AddNewWorkStack(parentSession, newStack, setActive);
+        }
+        public static void AddNewWorkStack(StackFlowSession parentSession, WorkStack newStack, bool setActive)
+        {
             parentSession.Session.Add(newStack);
             if (setActive)
             {
-                parentSession.ActiveStack = newStack; 
+                parentSession.ActiveStack = newStack;
             }
             newStack.Push(new WorkStackItem("RootItem", "Default Item", WorkStackItemPriority.Whenever));
+
         }
 
         public static StackFlowSession LoadSession(string filepath)
@@ -64,6 +69,7 @@ namespace StackFlow.Procedures
                 throw new InvalidOperationException("Attempted to complete workstack containing incomplete childitems. Close childitems or set the bool in the method call to true");
             }
             parentSession.CompletedStacks.Add(stack);
+            parentSession.Session.Remove(stack);
             //set the new active session as the first stack in the remaining list that has the max prio
             parentSession.ActiveStack = null; // in case its the last stack
             if (parentSession.Session.Any())
@@ -74,6 +80,20 @@ namespace StackFlow.Procedures
                 parentSession.ActiveStack = newActiveStack;
             }
             return stack;
+        }
+        public static void SwitchActiveStack(StackFlowSession parentSession, WorkStack newActiveStack)
+        {
+            //alrdy active?
+            if (parentSession.ActiveStack == newActiveStack) { return; }
+            //is this a newly created stack or is it in session already?
+            if (parentSession.Session.Contains(newActiveStack))
+            {
+                parentSession.ActiveStack = newActiveStack;
+            }
+            else
+            {
+                AddNewWorkStack(parentSession, newActiveStack, true);
+            }
         }
     }
 }
