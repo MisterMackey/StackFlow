@@ -15,6 +15,7 @@ namespace StackFlow
         //window handle, key, keyId, modifier
         public event EventHandler<HotKeyRegisterEventArgs> UserRequestsNewHotkey;
         public event EventHandler<HotKeyPressEventArgs> UserPressedHotkey;
+        public event EventHandler<StackSwitchEventArgs> UserRequestsStackSwitch;
         /// <summary>
         /// Gets the active session attached to the IStackFlowForm
         /// </summary>

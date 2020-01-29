@@ -13,6 +13,13 @@ namespace StackFlow.Controllers
             form.UserModifiesActiveStack += OnActiveStackModification;
             form.UserModifiesFloatingStack += OnFloatingStackModification;
             form.UserClicksInterrupt += OnUserInterrupt;
+            form.UserRequestsStackSwitch += OnUserStackSwitch;
+        }
+
+        private void OnUserStackSwitch(object sender, StackSwitchEventArgs e)
+        {
+            SessionProcedures.SwitchActiveStack(FormReference.GetActiveSession(), e.Stack);
+            FormReference.UpdateSessionFull();
         }
 
         private void OnUserInterrupt(object sender, WorkInterruptionEventArgs e)
@@ -45,7 +52,15 @@ namespace StackFlow.Controllers
                     WorkStackProcedures.AddNewTask(e.NewItem, FormReference.GetActiveSession().ActiveStack);
                     break;
                 case ActiveStackModificationTypes.ItemCompleted:
-                    var CompletedItem = WorkStackProcedures.CompleteTopItem(stackToModify);                    
+                    try
+                    {
+                        WorkStackProcedures.CompleteTopItem(stackToModify);
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        //stack is empty
+                        SessionProcedures.CompleteStack(FormReference.GetActiveSession(), true);
+                    }
                     break;
                 case ActiveStackModificationTypes.ItemModified:
                     WorkStackProcedures.ModifyTop(e.NewItem, FormReference.GetActiveSession().ActiveStack);
@@ -58,6 +73,9 @@ namespace StackFlow.Controllers
                     break;
                 case ActiveStackModificationTypes.ItemChanged:
                     throw new NotImplementedException("changed items not on top of stcak not supported");
+                    break;
+                case ActiveStackModificationTypes.StackCompleted:
+                    SessionProcedures.CompleteStack(FormReference.GetActiveSession(), true);
                     break;
             }
             FormReference.UpdateSessionFull();

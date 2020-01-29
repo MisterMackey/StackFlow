@@ -12,7 +12,8 @@ namespace StackFlow.EventArgClasses
         //these types may operate on any item in the stack
         ItemRemoved,
         ItemInserted,
-        ItemChanged
+        ItemChanged,
+        StackCompleted
     }
     public class ActiveStackModificationEventArgs : EventArgs
     {

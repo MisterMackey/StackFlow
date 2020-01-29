@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace StackFlow
 {
@@ -24,6 +25,7 @@ namespace StackFlow
         public event EventHandler<SessionSaveOrLoadEventArgs> UserLoadsSession;
         public event EventHandler<HotKeyRegisterEventArgs> UserRequestsNewHotkey;
         public event EventHandler<HotKeyPressEventArgs> UserPressedHotkey;
+        public event EventHandler<StackSwitchEventArgs> UserRequestsStackSwitch;
         #endregion
 
         #region public
@@ -39,6 +41,8 @@ namespace StackFlow
         }
         public void UpdateSessionFull()
         {
+            //might be session is empty, no update then
+            if (GetActiveSession().ActiveStack == null) { return; }
             UpdateActiveStackControl();
             UpdateInactiveStackControl();
             Text = $"StackFlow - {GetActiveSession().Name}";
@@ -84,8 +88,10 @@ namespace StackFlow
             ButtonLoad.Click += ButtonLoadClick;
             ButtonSave.Click += ButtonSaveClick;
             ButtonPush.Click += ButtonPushClick;
-            ButtonPop.Click += ButtonPopClick;    
+            ButtonPop.Click += ButtonPopClick;
+            ListViewSessionInactiveStacks.ItemActivate += InactiveStackSelected;
         }
+
 
         /// <summary>
         /// Method to intercept global hotkeys pressed when stackflow is not focused
@@ -107,6 +113,23 @@ namespace StackFlow
         }
 
         #region EventHandlers
+
+        private void InactiveStackSelected(object sender, EventArgs e)
+        {
+            var item = ListViewSessionInactiveStacks.SelectedItems[0];
+            string nameOfSelectedStack = item.Text;
+            foreach (WorkStack stack in GetActiveSession().Session)
+            {
+                if (stack.Name.Equals(nameOfSelectedStack))
+                {
+                    StackSwitchEventArgs a = new StackSwitchEventArgs();
+                    a.Stack = stack;
+                    UserRequestsStackSwitch?.Invoke(sender, a);
+                    break;
+                }
+            }
+        }
+
         private void UpdateActiveStackControl()
         {
             var controls = GroupBoxActiveStack.Controls;
@@ -138,7 +161,11 @@ namespace StackFlow
             else
             {
                 visibleBoxes = new PictureBox[10];
-                pictureBoxes.CopyTo(visibleBoxes, pictureBoxes.Length - ItemsVisibleInActiveStack);
+                //rolling my own loop cuz takewhile is no simpler and easier to read
+                for (int i = 0; i < ItemsVisibleInActiveStack; i++)
+                {
+                    visibleBoxes[i] = pictureBoxes[i];
+                }
             }
             for (int i = 0; i < visibleBoxes.Length; i++)
             {
@@ -208,7 +235,7 @@ namespace StackFlow
         }
         private WorkStackItem GetUserInputNewItem()
         {
-            WorkStackItemPriority defaultPrio = GetActiveSession().ActiveStack.Priority;
+            WorkStackItemPriority defaultPrio = GetActiveSession().ActiveStack == null ? WorkStackItemPriority.Whenever : GetActiveSession().ActiveStack.Priority; 
             SupportingForms.NewItemInputForm input = new SupportingForms.NewItemInputForm(defaultPrio);
             input.ShowDialog();
             if (input.DialogResult == DialogResult.OK)
@@ -219,6 +246,8 @@ namespace StackFlow
         }
         private void ButtonPopClick(object sender, EventArgs e)
         {
+            //might be session is empty, no update then
+            if (GetActiveSession().ActiveStack == null) { return; }
             ActiveStackModificationEventArgs a = new ActiveStackModificationEventArgs();
             a.TypeOfChange = ActiveStackModificationTypes.ItemCompleted;
             UserModifiesActiveStack?.Invoke(sender, a);
