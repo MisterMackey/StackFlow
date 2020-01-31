@@ -33,13 +33,10 @@
             this.ButtonPush = new System.Windows.Forms.Button();
             this.ButtonPop = new System.Windows.Forms.Button();
             this.GroupBoxActiveStack = new System.Windows.Forms.GroupBox();
-            this.PictureBoxActiveStackBase = new System.Windows.Forms.PictureBox();
             this.ButtonInterrupt = new System.Windows.Forms.Button();
             this.ButtonModify = new System.Windows.Forms.Button();
             this.LabelTitleActiveStack = new System.Windows.Forms.Label();
             this.ListViewSessionInactiveStacks = new System.Windows.Forms.ListView();
-            this.GroupBoxActiveStack.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxActiveStackBase)).BeginInit();
             this.SuspendLayout();
             // 
             // ButtonSave
@@ -80,20 +77,11 @@
             // 
             // GroupBoxActiveStack
             // 
-            this.GroupBoxActiveStack.Controls.Add(this.PictureBoxActiveStackBase);
             this.GroupBoxActiveStack.Location = new System.Drawing.Point(540, 33);
             this.GroupBoxActiveStack.Name = "GroupBoxActiveStack";
             this.GroupBoxActiveStack.Size = new System.Drawing.Size(200, 600);
             this.GroupBoxActiveStack.TabIndex = 1;
             this.GroupBoxActiveStack.TabStop = false;
-            // 
-            // PictureBoxActiveStackBase
-            // 
-            this.PictureBoxActiveStackBase.Location = new System.Drawing.Point(0, 0);
-            this.PictureBoxActiveStackBase.Name = "PictureBoxActiveStackBase";
-            this.PictureBoxActiveStackBase.Size = new System.Drawing.Size(100, 50);
-            this.PictureBoxActiveStackBase.TabIndex = 2;
-            this.PictureBoxActiveStackBase.TabStop = false;
             // 
             // ButtonInterrupt
             // 
@@ -118,7 +106,7 @@
             this.LabelTitleActiveStack.AutoSize = true;
             this.LabelTitleActiveStack.Location = new System.Drawing.Point(590, 9);
             this.LabelTitleActiveStack.Name = "LabelTitleActiveStack";
-            this.LabelTitleActiveStack.Size = new System.Drawing.Size(97, 15);
+            this.LabelTitleActiveStack.Size = new System.Drawing.Size(96, 15);
             this.LabelTitleActiveStack.TabIndex = 2;
             this.LabelTitleActiveStack.Text = "Title Active Stack";
             // 
@@ -147,8 +135,6 @@
             this.Controls.Add(this.ButtonSave);
             this.Name = "Form1";
             this.Text = "StackFlow";
-            this.GroupBoxActiveStack.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxActiveStackBase)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,7 +147,6 @@
         private System.Windows.Forms.Button ButtonPush;
         private System.Windows.Forms.Button ButtonPop;
         private System.Windows.Forms.GroupBox GroupBoxActiveStack;
-        private System.Windows.Forms.PictureBox PictureBoxActiveStackBase;
         private System.Windows.Forms.Button ButtonInterrupt;
         private System.Windows.Forms.Button ButtonModify;
         private System.Windows.Forms.Label LabelTitleActiveStack;

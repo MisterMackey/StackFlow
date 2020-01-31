@@ -181,6 +181,9 @@ namespace StackFlow
                 visibleBoxes[i].Visible = true;
                 visibleBoxes[i].Left = 0;
                 visibleBoxes[i].Top = i * (GroupBoxActiveStack.Height / ItemsVisibleInActiveStack);
+                visibleBoxes[i].SizeMode = PictureBoxSizeMode.StretchImage;
+                visibleBoxes[i].ClientSize = visibleBoxes[i].Size;
+                visibleBoxes[i].Image = Properties.Resources.PauperStack;
             }
             GroupBoxActiveStack.Controls.AddRange(pictureBoxes);
             LabelTitleActiveStack.Text = GetActiveSession().ActiveStack.Name;
