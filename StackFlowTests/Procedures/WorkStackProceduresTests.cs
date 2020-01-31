@@ -72,5 +72,38 @@ namespace StackFlow.Procedures.Tests
             Assert.IsTrue(test.CompletedItems.Contains(t));
             Assert.ThrowsException<ArgumentException>(() => WorkStackProcedures.SetItemComplete(test, t));
         }
+
+        [TestMethod()]
+        public void InsertItemIntoStackTest()
+        {
+            WorkStack test = new WorkStack("test", "");
+            //add some items
+            for (int i = 0; i < 3; i++)
+            {
+                test.Push(new WorkStackItem($"{i}"));
+            }
+            //add an item we gonna use as parent
+            WorkStackItem t = new WorkStackItem("hoi");
+            test.Push(t);
+            //moar items
+            for (int i = 3; i < 6; i++)
+            {
+                test.Push(new WorkStackItem($"{i}"));
+            }
+            //add item on top of parent
+            WorkStackItem a = new WorkStackItem("lemme step right in");
+            WorkStackProcedures.InsertItemIntoStack(test, t, a);
+            Assert.IsTrue(test.Contains(a));
+            //unroll the whole thing and check that the order is correct
+            WorkStackItem[] testarr = new WorkStackItem[8];
+            int cnt = test.Count;
+            for (int i = 0; i < cnt; i++)
+            {
+                testarr[i] = test.Pop();
+            }
+            //should be 3 items (6,5,4), then a, then t.
+            Assert.AreSame(testarr[3], a);
+            Assert.AreSame(testarr[4], t);
+        }
     }
 }

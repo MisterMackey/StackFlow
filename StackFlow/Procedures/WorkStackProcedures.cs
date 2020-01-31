@@ -35,6 +35,33 @@ namespace StackFlow.Procedures
         }
         public static void SetItemComplete(WorkStack Stack, WorkStackItem Item)
         {
+            //unroll all items on top of it
+            Stack<WorkStackItem> tempStack = UnRollStackUntilItemEncountered(Stack, Item);
+            Stack.Push(Item);//add it back
+            CompleteTopItem(Stack); //complete it properly
+             //and add the other stuff back
+            PutItemsBack(Stack, tempStack);
+        }
+        public static void InsertItemIntoStack(WorkStack Stack, WorkStackItem NewItemDesiredParent, WorkStackItem NewItem)
+        {
+            //unroll all items on top of it
+            Stack<WorkStackItem> tempStack = UnRollStackUntilItemEncountered(Stack, NewItemDesiredParent);
+            Stack.Push(NewItemDesiredParent);//add parent back
+            Stack.Push(NewItem);//add new item
+            //and add the other stuff back
+            PutItemsBack(Stack, tempStack);
+        }        
+
+        private static void PutItemsBack(WorkStack Stack, Stack<WorkStackItem> tempStack)
+        {
+            while (tempStack.Any())
+            {
+                Stack.Push(tempStack.Pop());
+            }
+        }
+
+        private static Stack<WorkStackItem> UnRollStackUntilItemEncountered(WorkStack Stack, WorkStackItem Item)
+        {
             if (!Stack.Contains(Item)) { throw new ArgumentException("Item not present in Stack"); }
             Stack<WorkStackItem> tempStack = new Stack<WorkStackItem>();
             WorkStackItem currItem = Stack.Pop();
@@ -43,13 +70,8 @@ namespace StackFlow.Procedures
                 tempStack.Push(currItem);
                 currItem = Stack.Pop();
             }
-            Stack.Push(Item);//add it back
-            CompleteTopItem(Stack); //complete it properly
-            //and add the other stuff back
-            while (tempStack.Any())
-            {
-                Stack.Push(tempStack.Pop());
-            }
+
+            return tempStack;
         }
     }
 }
