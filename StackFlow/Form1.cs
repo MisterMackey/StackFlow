@@ -16,6 +16,7 @@ namespace StackFlow
         private readonly IController _controller;
         private readonly int PutThisFormToForeGround;
         private const int ItemsVisibleInActiveStack = 10;
+        private string TitleOfItemInActiveStackThatGotRightClicked; //used to store a string we need if user right clicks and selects an op
         internal StackFlowSession ActiveSession { get; set; }
         #region Events
         public event EventHandler<WorkInterruptionEventArgs> UserClicksInterrupt;
@@ -77,7 +78,7 @@ namespace StackFlow
             ListViewSessionInactiveStacks.View = View.Details;
             //-2 = autosize
             ListViewSessionInactiveStacks.Columns.Add("Stacks", -2, HorizontalAlignment.Center);
-            ListViewSessionInactiveStacks.FullRowSelect = true;
+            ListViewSessionInactiveStacks.FullRowSelect = true;    
             UpdateSessionFull();
         }
 
@@ -151,6 +152,13 @@ namespace StackFlow
                 box.Controls.Add(boxLabel);
                 Size size = new Size(GroupBoxActiveStack.Width, GroupBoxActiveStack.Height / ItemsVisibleInActiveStack);
                 box.Size = size;
+                boxLabel.ContextMenuStrip = new ContextMenuStrip();
+                boxLabel.ContextMenuStrip.Items.Add("Insert above");
+                boxLabel.ContextMenuStrip.Items[0].Click += OnUserInsertsItemMiddleOfStack;
+                boxLabel.ContextMenuStrip.Items.Add("Set to complete");
+                boxLabel.ContextMenuStrip.Items[1].Click += OnUsersSetsItemToCompleteMiddleOfStack;
+                boxLabel.Enabled = true;
+                boxLabel.MouseDown += OnStackItemRightClick;
                 pictureBoxes[i] = box;
             }
             PictureBox[] visibleBoxes;
@@ -176,6 +184,9 @@ namespace StackFlow
             GroupBoxActiveStack.Controls.AddRange(pictureBoxes);
             LabelTitleActiveStack.Text = GetActiveSession().ActiveStack.Name;
         }
+
+
+
         private void UpdateInactiveStackControl()
         {
             ListViewSessionInactiveStacks.Items.Clear();
@@ -309,6 +320,36 @@ namespace StackFlow
             a.DescriptionOfNewStack = input.Description;
             a.NameOfNewStack = input.Name;
             UserClicksInterrupt?.Invoke(sender, a);
+        }
+        private void OnUsersSetsItemToCompleteMiddleOfStack(object sender, EventArgs e)
+        {
+            ActiveStackModificationEventArgs a = new ActiveStackModificationEventArgs();
+            a.TypeOfChange = ActiveStackModificationTypes.ItemRemoved;
+            string itemTitle = TitleOfItemInActiveStackThatGotRightClicked;
+            WorkStackItem refToItem = GetActiveSession().ActiveStack.First(x => x.Name == itemTitle);
+            a.NewItem = refToItem;
+            UserModifiesActiveStack?.Invoke(sender, a);
+        }
+
+        private void OnUserInsertsItemMiddleOfStack(object sender, EventArgs e)
+        {
+            ActiveStackModificationEventArgs a = new ActiveStackModificationEventArgs();
+            a.TypeOfChange = ActiveStackModificationTypes.ItemInserted;
+            string itemTitle = TitleOfItemInActiveStackThatGotRightClicked;
+            WorkStackItem refToItem = GetActiveSession().ActiveStack.First(x => x.Name == itemTitle);
+            a.DesiredParentIfInserting = refToItem;
+            a.NewItem = GetUserInputNewItem();
+            UserModifiesActiveStack?.Invoke(sender, a);
+        }
+
+        private void OnStackItemRightClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                Label ctrl = sender as Label;
+                this.TitleOfItemInActiveStackThatGotRightClicked = ctrl.Text;
+                ctrl.ContextMenuStrip.Show(ctrl, Cursor.Position, ToolStripDropDownDirection.Default);                
+            }
         }
         #endregion
 

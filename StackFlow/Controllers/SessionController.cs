@@ -66,13 +66,13 @@ namespace StackFlow.Controllers
                     WorkStackProcedures.ModifyTop(e.NewItem, FormReference.GetActiveSession().ActiveStack);
                     break;
                 case ActiveStackModificationTypes.ItemInserted:
-                    throw new NotImplementedException("changed items not on top of stcak not supported");
+                    WorkStackProcedures.InsertItemIntoStack(stackToModify, e.DesiredParentIfInserting, e.NewItem);
                     break;
                 case ActiveStackModificationTypes.ItemRemoved:
-                    throw new NotImplementedException("changed items not on top of stcak not supported");
+                    WorkStackProcedures.SetItemComplete(stackToModify, e.NewItem);
                     break;
                 case ActiveStackModificationTypes.ItemChanged:
-                    throw new NotImplementedException("changed items not on top of stcak not supported");
+                    throw new NotImplementedException("Honestly you already should have the reference to your item just change it from there");
                     break;
                 case ActiveStackModificationTypes.StackCompleted:
                     SessionProcedures.CompleteStack(FormReference.GetActiveSession(), true);

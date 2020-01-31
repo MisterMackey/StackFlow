@@ -2,6 +2,7 @@
 using StackFlow.EventArgClasses;
 using StackFlow.Models;
 using StackFlowTests;
+using System.Collections.Generic;
 
 namespace StackFlow.Controllers.Tests
 {
@@ -76,6 +77,43 @@ namespace StackFlow.Controllers.Tests
             //verify that one stack is created and its the active stack.
             Assert.IsTrue(test.GetActiveSession().ActiveStack.Name == "test");
             Assert.IsTrue(test.GetActiveSession().Session.Count == 1);
+        }
+        [TestMethod()]
+        public void SessionModifyMidOfStack()
+        {
+            var test = new TestForm();
+            var controller = new SessionController();
+            controller.Initialize(test);
+            test.SetActiveSession(new StackFlowSession());
+            //add some stuff
+            var sesh = test.GetActiveSession();
+            WorkStackItem bottom = new WorkStackItem("bottom");
+            WorkStackItem middle = new WorkStackItem("middle");
+            WorkStackItem top = new WorkStackItem("top");
+            sesh.ActiveStack.Push(bottom);
+            sesh.ActiveStack.Push(top);
+            test.InvokeModifyActiveStack(
+                new ActiveStackModificationEventArgs()
+                {
+                    NewItem = middle,
+                    DesiredParentIfInserting = bottom,
+                    TypeOfChange = ActiveStackModificationTypes.ItemInserted
+                }) ;
+            List<WorkStackItem> testresults = new List<WorkStackItem>();
+            foreach (var it in sesh.ActiveStack)
+            {
+                testresults.Add(it);
+            }
+            Assert.AreSame(testresults[1], middle);
+            testresults.Clear();
+            test.InvokeModifyActiveStack(
+                new ActiveStackModificationEventArgs()
+                {
+                    NewItem = middle,
+                    TypeOfChange = ActiveStackModificationTypes.ItemRemoved
+                });
+            Assert.IsFalse(sesh.ActiveStack.Contains(middle));
+            Assert.IsTrue(sesh.ActiveStack.CompletedItems.Contains(middle));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace StackFlow.EventArgClasses
     {
         public ActiveStackModificationTypes TypeOfChange { get; set; }
         public WorkStackItem NewItem { get; set; }
-
+        public WorkStackItem DesiredParentIfInserting { get; set; }
 
     }
 }

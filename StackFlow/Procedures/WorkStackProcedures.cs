@@ -22,7 +22,7 @@ namespace StackFlow.Procedures
 
         public static void ModifyTop(WorkStackItem newItem, WorkStack Stack)
         {
-            var item = Stack.Pop();
+            var item = Stack.Peek();
             item.Description = newItem.Description;
             item.Name = newItem.Name;
             item.Notes.Clear();
@@ -31,7 +31,6 @@ namespace StackFlow.Procedures
                 item.Notes.Add(note);
             }
             item.Priority = newItem.Priority;
-            Stack.Push(item);
         }
         public static void SetItemComplete(WorkStack Stack, WorkStackItem Item)
         {
@@ -50,7 +49,7 @@ namespace StackFlow.Procedures
             Stack.Push(NewItem);//add new item
             //and add the other stuff back
             PutItemsBack(Stack, tempStack);
-        }        
+        }     
 
         private static void PutItemsBack(WorkStack Stack, Stack<WorkStackItem> tempStack)
         {
