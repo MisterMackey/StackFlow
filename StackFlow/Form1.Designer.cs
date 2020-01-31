@@ -81,9 +81,9 @@
             // GroupBoxActiveStack
             // 
             this.GroupBoxActiveStack.Controls.Add(this.PictureBoxActiveStackBase);
-            this.GroupBoxActiveStack.Location = new System.Drawing.Point(590, 33);
+            this.GroupBoxActiveStack.Location = new System.Drawing.Point(540, 33);
             this.GroupBoxActiveStack.Name = "GroupBoxActiveStack";
-            this.GroupBoxActiveStack.Size = new System.Drawing.Size(100, 600);
+            this.GroupBoxActiveStack.Size = new System.Drawing.Size(200, 600);
             this.GroupBoxActiveStack.TabIndex = 1;
             this.GroupBoxActiveStack.TabStop = false;
             // 

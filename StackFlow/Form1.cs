@@ -152,6 +152,7 @@ namespace StackFlow
                 box.Controls.Add(boxLabel);
                 Size size = new Size(GroupBoxActiveStack.Width, GroupBoxActiveStack.Height / ItemsVisibleInActiveStack);
                 box.Size = size;
+                boxLabel.Size = size;
                 boxLabel.ContextMenuStrip = new ContextMenuStrip();
                 boxLabel.ContextMenuStrip.Items.Add("Insert above");
                 boxLabel.ContextMenuStrip.Items[0].Click += OnUserInsertsItemMiddleOfStack;
