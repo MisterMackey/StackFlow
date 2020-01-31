@@ -19,6 +19,7 @@ namespace StackFlowTests
         public event EventHandler<SessionSaveOrLoadEventArgs> UserLoadsSession;
         public event EventHandler<HotKeyRegisterEventArgs> UserRequestsNewHotkey;
         public event EventHandler<HotKeyPressEventArgs> UserPressedHotkey;
+        public event EventHandler<StackSwitchEventArgs> UserRequestsStackSwitch;
         public StackFlowSession GetActiveSession()
         {
             return ActiveSession;

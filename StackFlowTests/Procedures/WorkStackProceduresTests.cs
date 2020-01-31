@@ -1,5 +1,7 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using StackFlow.Procedures;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using StackFlow.Models;
+using System;
 
 namespace StackFlow.Procedures.Tests
 {
@@ -45,6 +47,30 @@ namespace StackFlow.Procedures.Tests
             Assert.AreNotSame(retrieved, slightlydifferentItem);
             //the name should now reflect the name of the slightly different item tho
             Assert.AreEqual(slightlydifferentItem.Name, retrieved.Name);
+        }
+
+        [TestMethod()]
+        public void SetItemCompleteTest()
+        {
+            WorkStack test = new WorkStack("test", "");
+            //add some items
+            for (int i = 0; i < 3; i++)
+            {
+                test.Push(new WorkStackItem($"{i}"));
+            }
+            //add an item we gonna remove later
+            WorkStackItem t = new WorkStackItem("hoi");
+            test.Push(t);
+            //moar items
+            for (int i = 3; i < 6; i++)
+            {
+                test.Push(new WorkStackItem($"{i}"));
+            }
+            //remove the middle item
+            WorkStackProcedures.SetItemComplete(test, t);
+            Assert.IsFalse(test.Contains(t));
+            Assert.IsTrue(test.CompletedItems.Contains(t));
+            Assert.ThrowsException<ArgumentException>(() => WorkStackProcedures.SetItemComplete(test, t));
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using StackFlow.Models;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace StackFlow.Procedures
 {
@@ -30,6 +32,24 @@ namespace StackFlow.Procedures
             }
             item.Priority = newItem.Priority;
             Stack.Push(item);
+        }
+        public static void SetItemComplete(WorkStack Stack, WorkStackItem Item)
+        {
+            if (!Stack.Contains(Item)) { throw new ArgumentException("Item not present in Stack"); }
+            Stack<WorkStackItem> tempStack = new Stack<WorkStackItem>();
+            WorkStackItem currItem = Stack.Pop();
+            while (currItem != Item)
+            {
+                tempStack.Push(currItem);
+                currItem = Stack.Pop();
+            }
+            Stack.Push(Item);//add it back
+            CompleteTopItem(Stack); //complete it properly
+            //and add the other stuff back
+            while (tempStack.Any())
+            {
+                Stack.Push(tempStack.Pop());
+            }
         }
     }
 }
