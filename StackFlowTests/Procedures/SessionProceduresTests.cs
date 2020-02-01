@@ -105,5 +105,20 @@ namespace StackFlow.Procedures.Tests
             Assert.IsTrue(sesh.Session.Contains(hurp));
             SessionProcedures.SwitchActiveStack(sesh, hurp); //should not error out
         }
+
+        [TestMethod()]
+        public void SetActiveOrInactiveTest()
+        {
+            StackFlowSession test = new StackFlowSession();
+            test.SetActive();
+            Assert.IsTrue(test.PeriodsWhenActivated.Count == 1);
+            test.SetActive(); //setting it active when its active alrdy shouldn't change squat
+            Assert.IsTrue(test.PeriodsWhenActivated.Count == 1);
+            test.SetInActive();
+            Assert.IsTrue(test.PeriodsWhenActivated.Count == 1);
+            test.SetInActive(); //setting it InActive when its InActive alrdy shouldn't change squat
+            Assert.IsTrue(test.PeriodsWhenActivated.Count == 1);
+            Assert.IsTrue(test.PeriodsWhenActivated[0] != null); //this compares the timespan within, it should be set
+        }
     }
 }

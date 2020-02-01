@@ -104,6 +104,23 @@ namespace StackFlow.Procedures.Tests
             //should be 3 items (6,5,4), then a, then t.
             Assert.AreSame(testarr[3], a);
             Assert.AreSame(testarr[4], t);
+
         }
+        [TestMethod()]
+        public void SetActiveOrInactiveTest()
+        {
+            WorkStack test = new WorkStack("test", "f");
+            test.SetActive();
+            Assert.IsTrue(test.PeriodsWhenActivated.Count == 1);
+            test.SetActive(); //setting it active when its active alrdy shouldn't change squat
+            Assert.IsTrue(test.PeriodsWhenActivated.Count == 1);
+            test.SetInActive();
+            Assert.IsTrue(test.PeriodsWhenActivated.Count == 1);
+            test.SetInActive(); //setting it InActive when its InActive alrdy shouldn't change squat
+            Assert.IsTrue(test.PeriodsWhenActivated.Count == 1);
+            Assert.IsTrue(test.PeriodsWhenActivated[0] != null); //this compares the timespan within, it should be set
+        }
+
+
     }
 }

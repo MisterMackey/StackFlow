@@ -20,5 +20,33 @@ namespace StackFlow.Models
             span.ActivatedAbsoluteTime = startTime;
             return span;
         }
+        public static bool operator==(ActiveTimeSpan a, ActiveTimeSpan b)
+        {
+            if (a == null || b == null)
+            {
+                return false;
+            }
+            else
+            {
+                return (a.ActiveTime == b.ActiveTime);
+            }
+        }
+        public static bool operator !=(ActiveTimeSpan a, ActiveTimeSpan b)
+        {
+            return !(a == b);
+        }
+        public override bool Equals(object obj)
+        {
+            if (obj is ActiveTimeSpan)
+            {
+                ActiveTimeSpan b = (ActiveTimeSpan)obj;
+                return (this == b);
+            }
+            else return false;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }
