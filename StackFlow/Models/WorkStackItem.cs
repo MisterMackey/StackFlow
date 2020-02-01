@@ -16,6 +16,11 @@ namespace StackFlow.Models
         //todo: property that links to another stack in true Thread.Join() fashion
         //todo: parent container property (for the above)
 
+        /// <summary>
+        /// Holds a bunch of structs which track 2 timestamps and a timespan. the timestamps should mark times at which this object was
+        /// activated and de-activated. The timespan should hold the diff and is mainly there to prevent calculating that stuff a million times.
+        /// </summary>
+        public List<ActiveTimeSpan> PeriodsWhenActivated { get; set; }
         #endregion
 
         #region Constructors
@@ -30,6 +35,7 @@ namespace StackFlow.Models
             this.Notes = new List<string>();
             this.Priority = WorkStackItemPriority.Whenever;
             CreatedDate = DateTime.Now;
+            PeriodsWhenActivated = new List<ActiveTimeSpan>();
         }
         public WorkStackItem(string Name, WorkStackItemPriority Priority) : this(Name, "")
         {
@@ -41,7 +47,7 @@ namespace StackFlow.Models
         }
 
         //used for cloning
-        public WorkStackItem(string Name, string Description, IList<string> Notes, WorkStackItemPriority Priority, DateTime CreatedDate, DateTime? ClosedDate)
+        public WorkStackItem(string Name, string Description, IList<string> Notes, WorkStackItemPriority Priority, DateTime CreatedDate, DateTime? ClosedDate, List<ActiveTimeSpan> PeriodsWhenActivated)
         {
             this.Name = Name;
             this.Description = Description;
@@ -50,6 +56,7 @@ namespace StackFlow.Models
             this.Notes.AddRange(Notes);
             this.CreatedDate = CreatedDate;
             this.ClosedDate = ClosedDate;
+            this.PeriodsWhenActivated = PeriodsWhenActivated;
         }
         #endregion
     }

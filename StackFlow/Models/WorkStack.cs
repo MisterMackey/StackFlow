@@ -21,6 +21,11 @@ namespace StackFlow.Models
             }
         }
         public List<WorkStackItem> CompletedItems { get; }
+        /// <summary>
+        /// Holds a bunch of structs which track 2 timestamps and a timespan. the timestamps should mark times at which this object was
+        /// activated and de-activated. The timespan should hold the diff and is mainly there to prevent calculating that stuff a million times.
+        /// </summary>
+        public List<ActiveTimeSpan> PeriodsWhenActivated { get; set; }
         #region Interface
 
         public IEnumerator<WorkStackItem> GetEnumerator()
@@ -177,6 +182,7 @@ namespace StackFlow.Models
             this.Description = Description;
             m_Stack = new Stack<WorkStackItem>();
             CompletedItems = new List<WorkStackItem>();
+            PeriodsWhenActivated = new List<ActiveTimeSpan>();
         }
         #endregion
 
