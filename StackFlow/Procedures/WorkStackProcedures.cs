@@ -49,7 +49,23 @@ namespace StackFlow.Procedures
             Stack.Push(NewItem);//add new item
             //and add the other stuff back
             PutItemsBack(Stack, tempStack);
-        }     
+        }
+        public static void SetActive(this WorkStack Stack)
+        {
+            if (Stack.IsActive) { return; }
+            Stack.IsActive = true;
+            ActiveTimeSpan span = DateTimeOffset.Now;
+            Stack.PeriodsWhenActivated.Add(span);
+        }
+        public static void SetInActive(this WorkStack Stack)
+        {
+            if (!Stack.IsActive) { return; }
+            Stack.IsActive = false;
+            var span = Stack.PeriodsWhenActivated.Last();
+            DateTimeOffset n = DateTimeOffset.Now;
+            span.ClosedAbsoluteTime = n;
+            span.ActiveTime = TimeSpan.FromTicks(span.ActivatedAbsoluteTime.Ticks - n.Ticks);
+        }
 
         private static void PutItemsBack(WorkStack Stack, Stack<WorkStackItem> tempStack)
         {

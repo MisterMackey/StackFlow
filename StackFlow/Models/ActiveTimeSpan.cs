@@ -14,5 +14,11 @@ namespace StackFlow.Models
         {
             return a.ActiveTime;
         }
+        public static implicit operator ActiveTimeSpan(DateTimeOffset startTime)
+        {
+            ActiveTimeSpan span = new ActiveTimeSpan();
+            span.ActivatedAbsoluteTime = startTime;
+            return span;
+        }
     }
 }

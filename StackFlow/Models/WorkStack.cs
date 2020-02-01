@@ -26,6 +26,7 @@ namespace StackFlow.Models
         /// activated and de-activated. The timespan should hold the diff and is mainly there to prevent calculating that stuff a million times.
         /// </summary>
         public List<ActiveTimeSpan> PeriodsWhenActivated { get; set; }
+        public bool IsActive { get; set; }
         #region Interface
 
         public IEnumerator<WorkStackItem> GetEnumerator()
@@ -183,6 +184,7 @@ namespace StackFlow.Models
             m_Stack = new Stack<WorkStackItem>();
             CompletedItems = new List<WorkStackItem>();
             PeriodsWhenActivated = new List<ActiveTimeSpan>();
+            IsActive = false;
         }
         #endregion
 

@@ -7,6 +7,7 @@ namespace StackFlow.Models
     public class StackFlowSession
     {
         public string Name { get; set; }
+        public bool IsActive { get; set; }
         public StackFlowSession()
         {
             Session = new List<WorkStack>();
@@ -14,6 +15,7 @@ namespace StackFlow.Models
             FloatingStack = new WorkStack("Default Floating Stack", "");
             ActiveStack = new WorkStack("Default Active Stack", "");
             PeriodsWhenActivated = new List<ActiveTimeSpan>();
+            IsActive = false;
         }
         /// <summary>
         /// Holds all the workstacks except the floating stack

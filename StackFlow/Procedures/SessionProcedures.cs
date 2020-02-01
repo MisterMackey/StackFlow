@@ -8,6 +8,8 @@ namespace StackFlow.Procedures
 {
     public static class SessionProcedures
     {
+        #region Public
+
         public static void SaveSession(string filepath, StackFlowSession session)
         {
             Stream stream;
@@ -34,7 +36,7 @@ namespace StackFlow.Procedures
             parentSession.Session.Add(newStack);
             if (setActive)
             {
-                parentSession.ActiveStack = newStack;
+                SetActiveStack(parentSession, newStack);
             }
             newStack.Push(new WorkStackItem("RootItem", "Default Item", WorkStackItemPriority.Whenever));
 
@@ -70,6 +72,7 @@ namespace StackFlow.Procedures
             }
             parentSession.CompletedStacks.Add(stack);
             parentSession.Session.Remove(stack);
+            stack.SetInActive();
             //set the new active session as the first stack in the remaining list that has the max prio
             parentSession.ActiveStack = null; // in case its the last stack
             if (parentSession.Session.Any())
@@ -78,6 +81,7 @@ namespace StackFlow.Procedures
                 WorkStack newActiveStack = parentSession.Session.First(stk => stk.Priority ==
                 parentSession.Session.Max(x => x.Priority));
                 parentSession.ActiveStack = newActiveStack;
+                newActiveStack.SetActive();
             }
             return stack;
         }
@@ -88,12 +92,45 @@ namespace StackFlow.Procedures
             //is this a newly created stack or is it in session already?
             if (parentSession.Session.Contains(newActiveStack))
             {
-                parentSession.ActiveStack = newActiveStack;
+                SetActiveStack(parentSession, newActiveStack);
             }
             else
             {
                 AddNewWorkStack(parentSession, newActiveStack, true);
             }
         }
+
+        public static void SetActive(this StackFlowSession Session)
+        {
+            if (Session.IsActive) { return; }
+            Session.IsActive = true;
+            ActiveTimeSpan span = DateTimeOffset.Now;
+            Session.PeriodsWhenActivated.Add(span);
+        }
+        public static void SetInActive(this StackFlowSession Session)
+        {
+            if (!Session.IsActive) { return; }
+            Session.IsActive = false;
+            var span = Session.PeriodsWhenActivated.Last();
+            DateTimeOffset n = DateTimeOffset.Now;
+            span.ClosedAbsoluteTime = n;
+            span.ActiveTime = TimeSpan.FromTicks(span.ActivatedAbsoluteTime.Ticks - n.Ticks);
+        }
+        #endregion
+
+        #region Private
+
+        /// <summary>
+        /// used internally to set an active stack while also handling the assignment of active timespans
+        /// </summary>
+        /// <param name="sesh"></param>
+        /// <param name="stack"></param>
+        private static void SetActiveStack(StackFlowSession sesh, WorkStack stack)
+        {
+            sesh.ActiveStack.SetInActive();
+            sesh.ActiveStack = stack;
+            stack.SetActive();
+        }
+        #endregion
     }
 }
