@@ -8,6 +8,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
+using StackFlow.Procedures;
 
 namespace StackFlow
 {
@@ -38,7 +39,12 @@ namespace StackFlow
         public void SetActiveSession(StackFlowSession Session)
         {
             //probably trigger save event here?
+            if (ActiveSession != null)
+            {
+                ActiveSession.SetInActive();
+            }
             ActiveSession = Session;
+            ActiveSession.SetActive();
         }
         public void UpdateSessionFull()
         {
