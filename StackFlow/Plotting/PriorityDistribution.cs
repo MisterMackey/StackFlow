@@ -1,4 +1,5 @@
 ﻿using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Series;
 using OxyPlot.WindowsForms;
 using System;
@@ -9,20 +10,30 @@ namespace StackFlow.Plotting
 {
     public class PriorityDistribution
     {
-        public void init()
+        public static PlotModel GetTestPlotModel()
         {
-            var testmodel = new PlotModel();
-            var series = new BarSeries();
-            var iti = new List<BarItem>();
-            BarItem itum = new BarItem(value: 2);
-            iti.Add(itum);
-            series.ItemsSource = iti;
-            testmodel.Series.Add(series);
-
-            PlotView view = new PlotView();
-            view.Model = testmodel;
-            //todo: draw a form with this and play around
-            
+            PlotModel model = new PlotModel()
+            {
+                Title = "Test Plot "
+            };
+            var axisx = new CategoryAxis() { Title = "Categories" };
+            axisx.Labels.AddRange(new string[] { "One", "Two", "Three", "Four" });
+            model.Axes.Add(axisx);
+            //model.Axes.Add(new LinearAxis());
+            model.Axes.Add(new LinearAxis() { AbsoluteMaximum = 50, AbsoluteMinimum = 0 });
+            for (int i = 0; i < 4; i++)
+            {
+                LineSeries series = new LineSeries();
+                List<DataPoint> items = new List<DataPoint>();
+                for (int k = 0; k < 10; k++)
+                {
+                    items.Add(new DataPoint(k, i * k));
+                }
+                series.ItemsSource = items;
+                series.Title = $"Series {i}";
+                model.Series.Add(series);
+            }
+            return model;
         }
         
     }
