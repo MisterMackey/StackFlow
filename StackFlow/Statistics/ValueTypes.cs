@@ -38,6 +38,7 @@ namespace StackFlow.Statistics
             public WorkStackItemPriority Priority;
             public DateTimeOffset Opened;
             public DateTimeOffset? Closed;
+            public char[][] Notes;
             public int Id;
             public int StackId;
             public int SessionId;
@@ -85,6 +86,12 @@ namespace StackFlow.Statistics
             s.Priority = Source.Priority;
             s.Opened = Source.CreatedDate;
             s.Closed = Source.ClosedDate;
+            int countNotes = Source.Notes.Count;
+            s.Notes = new char[countNotes][];
+            for (int i = 0; i < countNotes; i++)
+            {
+                s.Notes[i] = Source.Notes[i].ToCharArray();
+            }
             s.Id = idTracker.getNextItemId();
             s.SessionId = SessionId;
             s.StackId = StackId;

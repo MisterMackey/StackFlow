@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using StackFlow.Models;
 using StackFlow.Statistics;
 using System;
 using System.Collections.Generic;
@@ -12,13 +13,25 @@ namespace StackFlow.Statistics.Tests
         [TestMethod()]
         public void TransformToSessionStructTest()
         {
-            Assert.Fail();
+            ValueTypes vt = new ValueTypes();
+            StackFlowSession sesh = new StackFlowSession() { Name = "test", };
+            var res = vt.TransformToSessionStruct(sesh);
+            Assert.IsTrue(res.Id == 0);
+            Assert.AreEqual(new string(res.Name), "test");
+            sesh = new StackFlowSession() { Name = "derp", };
+            res = vt.TransformToSessionStruct(sesh);
+            Assert.IsTrue(res.Id == 1);
+            Assert.AreEqual(new string(res.Name), "derp");
         }
 
         [TestMethod()]
         public void TransformToStackStructTest()
         {
-            Assert.Fail();
+            ValueTypes vt = new ValueTypes();
+            WorkStack stack = new WorkStack("test", "");
+            var res = vt.TransformToStackStruct(stack, 0);
+            Assert.IsTrue(res.Id == 0);
+            Assert.AreEqual(new string(res.Name), "test");
         }
 
         [TestMethod()]
