@@ -97,7 +97,9 @@ namespace StackFlow
             ButtonPush.Click += ButtonPushClick;
             ButtonPop.Click += ButtonPopClick;
             ListViewSessionInactiveStacks.ItemActivate += InactiveStackSelected;
+            this.FormClosing += OnAppExit;
         }
+
 
 
         /// <summary>
@@ -121,6 +123,14 @@ namespace StackFlow
 
         #region EventHandlers
 
+
+        private void OnAppExit(object sender, FormClosingEventArgs e)
+        {
+            if (ActiveSession != null)
+            {
+                ActiveSession.SetInActive();
+            }
+        }
         private void InactiveStackSelected(object sender, EventArgs e)
         {
             var item = ListViewSessionInactiveStacks.SelectedItems[0];
