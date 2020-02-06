@@ -31,19 +31,32 @@ namespace StackFlow.Statistics.Tests
             WorkStack stack = new WorkStack("test", "");
             var res = vt.TransformToStackStruct(stack, 0);
             Assert.IsTrue(res.Id == 0);
-            Assert.AreEqual(new string(res.Name), "test");
+            Assert.AreEqual(new string(res.Name), stack.Name);
+            Assert.AreEqual(res.Priority, stack.Priority);
+            Assert.AreEqual(res.SessionId, 0);
         }
 
         [TestMethod()]
         public void TransformToItemStructTest()
         {
-            Assert.Fail();
+            ValueTypes vt = new ValueTypes();
+            WorkStackItem it = new WorkStackItem("test", "pfff", WorkStackItemPriority.Today);
+            var res = vt.TransformToItemStruct(it,0,0);
+            Assert.AreEqual(new string(res.Name), it.Name);
+            Assert.AreEqual(new string(res.Description), it.Description);
+            Assert.AreEqual(res.Priority, it.Priority);
+            Assert.AreEqual(res.Opened, it.CreatedDate);
+            Assert.IsTrue(res.Id == 0 && res.SessionId == 0 && res.StackId == 0);
         }
 
         [TestMethod()]
         public void TransformToActiveTimeTest()
         {
-            Assert.Fail();
+            ActiveTimeSpan a = new ActiveTimeSpan();
+            ValueTypes vt = new ValueTypes();
+            var res = vt.TransformToActiveTime(a, 0, 0, 0);
+            Assert.AreEqual(res.ActiveTimeSpan, a);
+            Assert.IsTrue(res.Id == 0 && res.SessionId == 0 && res.StackId == 0 && res.ItemId == 0);
         }
     }
 }

@@ -27,6 +27,8 @@ namespace StackFlow.Models
         /// </summary>
         public List<ActiveTimeSpan> PeriodsWhenActivated { get; set; }
         public bool IsActive { get; set; }
+        public DateTimeOffset Opened { get; }
+        public DateTimeOffset? Closed { get; set; }
         #region Interface
 
         public IEnumerator<WorkStackItem> GetEnumerator()
@@ -185,6 +187,7 @@ namespace StackFlow.Models
             CompletedItems = new List<WorkStackItem>();
             PeriodsWhenActivated = new List<ActiveTimeSpan>();
             IsActive = false;
+            Opened = DateTimeOffset.Now;
         }
         #endregion
 

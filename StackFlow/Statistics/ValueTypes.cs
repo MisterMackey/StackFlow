@@ -68,12 +68,8 @@ namespace StackFlow.Statistics
             s.Name = Source.Name.ToCharArray();
             s.Description = Source.Description.ToCharArray();
             s.Priority = Source.Priority;
-            s.Opened = Source.CompletedItems.Min(x => x.CreatedDate);
-            if (Source.Any()) { }//true if some items are incomplete
-            else
-            {
-                s.Closed = Source.CompletedItems.Max(x => x.ClosedDate);
-            }
+            s.Opened = Source.Opened;
+            s.Closed = Source.Closed;
             s.Id = idTracker.getNextStackId();
             s.SessionId = SessionId;
             return s;

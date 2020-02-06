@@ -71,6 +71,7 @@ namespace StackFlow.Procedures
                 throw new InvalidOperationException("Attempted to complete workstack containing incomplete childitems. Close childitems or set the bool in the method call to true");
             }
             parentSession.CompletedStacks.Add(stack);
+            stack.Closed = DateTimeOffset.Now;
             parentSession.Session.Remove(stack);
             stack.SetInActive();
             //set the new active session as the first stack in the remaining list that has the max prio
