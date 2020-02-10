@@ -13,7 +13,7 @@ namespace StackFlow.Statistics.Tests
         [TestMethod()]
         public void TransformToSessionStructTest()
         {
-            ValueTypes vt = new ValueTypes();
+            ValueTypeConstructor vt = new ValueTypeConstructor();
             StackFlowSession sesh = new StackFlowSession() { Name = "test", };
             var res = vt.TransformToSessionStruct(sesh);
             Assert.IsTrue(res.Id == 0);
@@ -27,7 +27,7 @@ namespace StackFlow.Statistics.Tests
         [TestMethod()]
         public void TransformToStackStructTest()
         {
-            ValueTypes vt = new ValueTypes();
+            ValueTypeConstructor vt = new ValueTypeConstructor();
             WorkStack stack = new WorkStack("test", "");
             var res = vt.TransformToStackStruct(stack, 0);
             Assert.IsTrue(res.Id == 0);
@@ -39,7 +39,7 @@ namespace StackFlow.Statistics.Tests
         [TestMethod()]
         public void TransformToItemStructTest()
         {
-            ValueTypes vt = new ValueTypes();
+            ValueTypeConstructor vt = new ValueTypeConstructor();
             WorkStackItem it = new WorkStackItem("test", "pfff", WorkStackItemPriority.Today);
             var res = vt.TransformToItemStruct(it,0,0);
             Assert.AreEqual(new string(res.Name), it.Name);
@@ -53,7 +53,7 @@ namespace StackFlow.Statistics.Tests
         public void TransformToActiveTimeTest()
         {
             ActiveTimeSpan a = new ActiveTimeSpan();
-            ValueTypes vt = new ValueTypes();
+            ValueTypeConstructor vt = new ValueTypeConstructor();
             var res = vt.TransformToActiveTime(a, 0, 0, 0);
             Assert.AreEqual(res.ActiveTimeSpan, a);
             Assert.IsTrue(res.Id == 0 && res.SessionId == 0 && res.StackId == 0 && res.ItemId == 0);

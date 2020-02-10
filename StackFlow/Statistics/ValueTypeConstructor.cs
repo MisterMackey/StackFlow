@@ -10,48 +10,51 @@ namespace StackFlow.Statistics
     /// holds definitions for structs used by <see cref="StackFlowDataCollections"/> to achieve data locality
     /// essentially they are valuetype versions of the classes under models with some small adjustments 
     /// to make it easier and more efficient to query certain things (at the cost of some memory).
-    /// The class also includes state machines to assign Id's
     /// </summary>
-    public class ValueTypes
+    #region Types
+        //todo: seperate the struct defeiniteion from the methods creating them.
+    public struct Session
+    {
+        public char[] Name;
+        public int Id;
+    }
+    public struct Stack
+    {
+        public char[] Name;
+        public char[] Description;
+        public WorkStackItemPriority Priority;
+        public DateTimeOffset Opened;
+        public DateTimeOffset? Closed;
+        public int Id;
+        public int SessionId;
+    }
+    public struct Item
+    {
+        public char[] Name;
+        public char[] Description;
+        public WorkStackItemPriority Priority;
+        public DateTimeOffset Opened;
+        public DateTimeOffset? Closed;
+        public char[][] Notes;
+        public int Id;
+        public int StackId;
+        public int SessionId;
+    }
+    public struct ActiveTime
+    {
+        public ActiveTimeSpan ActiveTimeSpan;
+        public int Id;
+        public int ItemId;
+        public int StackId;
+        public int SessionId;
+    }
+#endregion
+    /// <summary>
+    /// Holds methods to construct the valuetypes whiel also dealing with ID assignment
+    /// </summary>
+    public class ValueTypeConstructor
     {
         private IdTracker idTracker = new IdTracker();
-        #region Types
-        public struct Session
-        {
-            public char[] Name;
-            public int Id;
-        }
-        public struct Stack
-        {
-            public char[] Name;
-            public char[] Description;
-            public WorkStackItemPriority Priority;
-            public DateTimeOffset Opened;
-            public DateTimeOffset? Closed;
-            public int Id;
-            public int SessionId;
-        }
-        public struct Item
-        {
-            public char[] Name;
-            public char[] Description;
-            public WorkStackItemPriority Priority;
-            public DateTimeOffset Opened;
-            public DateTimeOffset? Closed;
-            public char[][] Notes;
-            public int Id;
-            public int StackId;
-            public int SessionId;
-        }
-        public struct ActiveTime
-        {
-            public ActiveTimeSpan ActiveTimeSpan;
-            public int Id;
-            public int ItemId;
-            public int StackId;
-            public int SessionId;
-        }
-        #endregion
 
         #region Public Methods
         public Session TransformToSessionStruct(StackFlowSession Source)
