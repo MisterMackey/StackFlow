@@ -17,7 +17,7 @@ namespace StackFlow.Statistics
         public static Session TransformToSessionStruct(this StackFlowSession Source, int SessionId)
         {
             Session s = new Session();
-            s.Name = Source.Name.ToCharArray();
+            s.Name = Source.Name != null ? Source.Name.ToCharArray() : null;
             s.Id = SessionId;
             return s;
         }
@@ -25,8 +25,8 @@ namespace StackFlow.Statistics
         public static Stack TransformToStackStruct(this WorkStack Source, int SessionId, int StackId)
         {
             Stack s = new Stack();
-            s.Name = Source.Name.ToCharArray();
-            s.Description = Source.Description.ToCharArray();
+            s.Name = Source.Name != null ? Source.Name.ToCharArray() : null;
+            s.Description = Source.Description != null ? Source.Description.ToCharArray() : null;
             s.Priority = Source.Priority;
             s.Opened = Source.Opened;
             s.Closed = Source.Closed;
@@ -37,8 +37,8 @@ namespace StackFlow.Statistics
         public static Item TransformToItemStruct(this WorkStackItem Source, int SessionId, int StackId, int ItemId)
         {
             Item s = new Item();
-            s.Name = Source.Name.ToCharArray();
-            s.Description = Source.Description.ToCharArray();
+            s.Name = Source.Name != null ? Source.Name.ToCharArray() : null;
+            s.Description = Source.Description != null ? Source.Description.ToCharArray() : null;
             s.Priority = Source.Priority;
             s.Opened = Source.CreatedDate;
             s.Closed = Source.ClosedDate;
