@@ -45,21 +45,95 @@ namespace StackFlow.Statistics
             List<Stack> tempStacks = new List<Stack>(sescnt * 100);
             List<Item> tempItems = new List<Item>(sescnt * 1000);
             List<ActiveTime> tempTiems = new List<ActiveTime>(sescnt * 4000);
+
+            //start initializing
             int i=0 , j =0 , k =0, l = 0; //some iterators ima need
             foreach (var source in SourceData)
             {
                 tempSeshs.Add(source.TransformToSessionStruct(i));
-                //handle stacks
-                foreach (var innerSource in source.Session)
+                //handle stacks in session
+                foreach (WorkStack innerSource in source.Session)
                 {
                     tempStacks.Add(innerSource.TransformToStackStruct(i, j));
                     //handle items in stack
-                    foreach (var innerInnerSource in )
+                    foreach (WorkStackItem innerInnerSource in innerSource)
+                    {
+                        tempItems.Add(innerInnerSource.TransformToItemStruct(i, j, k));
+                        //handle activetimes in item
+                        foreach (ActiveTimeSpan innerInnerInnerSource in innerInnerSource.PeriodsWhenActivated)
+                        {
+                            tempTiems.Add(innerInnerInnerSource.TransformToActiveTime(i, j, k, l));
+                            //we hit rock bottom
+                            l++;
+                        }
+                        k++;
+                    }
+                    //handle completed items in hte stack
+                    foreach (WorkStackItem innerInnerSource in innerSource.CompletedItems)
+                    {
+                        tempItems.Add(innerInnerSource.TransformToItemStruct(i, j, k));
+                        //handle activetimes in item
+                        foreach (ActiveTimeSpan innerInnerInnerSource in innerInnerSource.PeriodsWhenActivated)
+                        {
+                            tempTiems.Add(innerInnerInnerSource.TransformToActiveTime(i, j, k, l));
+                            //we hit rock bottom.. again
+                            l++;
+                        }
+                        k++;
+                    }
+                    //handle activetimespans in stack, these will get -1 as their itemId
+                    foreach (ActiveTimeSpan innerInnerSource in innerSource.PeriodsWhenActivated)
+                    {
+                        tempTiems.Add(innerInnerSource.TransformToActiveTime(i, j, -1, l));
+                        l++;
+                    }
                     j++;
                 }
-
+                //handle completed stacks
+                foreach (WorkStack innerSource in source.CompletedStacks)
+                {
+                    tempStacks.Add(innerSource.TransformToStackStruct(i, j));
+                    //handle items in stack
+                    foreach (WorkStackItem innerInnerSource in innerSource)
+                    {
+                        tempItems.Add(innerInnerSource.TransformToItemStruct(i, j, k));
+                        //handle activetimes in item
+                        foreach (ActiveTimeSpan innerInnerInnerSource in innerInnerSource.PeriodsWhenActivated)
+                        {
+                            tempTiems.Add(innerInnerInnerSource.TransformToActiveTime(i, j, k, l));
+                            //we hit rock bottom
+                            l++;
+                        }
+                        k++;
+                    }
+                    //handle completed items in hte stack
+                    foreach (WorkStackItem innerInnerSource in innerSource.CompletedItems)
+                    {
+                        tempItems.Add(innerInnerSource.TransformToItemStruct(i, j, k));
+                        //handle activetimes in item
+                        foreach (ActiveTimeSpan innerInnerInnerSource in innerInnerSource.PeriodsWhenActivated)
+                        {
+                            tempTiems.Add(innerInnerInnerSource.TransformToActiveTime(i, j, k, l));
+                            //we hit rock bottom.. again
+                            l++;
+                        }
+                        k++;
+                    }
+                    //handle activetimespans in stack, these will get -1 as their itemId
+                    foreach (ActiveTimeSpan innerInnerSource in innerSource.PeriodsWhenActivated)
+                    {
+                        tempTiems.Add(innerInnerSource.TransformToActiveTime(i, j, -1, l));
+                        l++;
+                    }
+                    j++;
+                }
                 i++;
             }
+            //resize and commit to collections
+            _Sessions = tempSeshs.ToArray();
+            _Stacks = tempStacks.ToArray();
+            _Items = tempItems.ToArray();
+            _Times = tempTiems.ToArray();
         }
 
         #region Getters
