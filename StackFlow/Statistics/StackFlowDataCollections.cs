@@ -11,8 +11,11 @@ namespace StackFlow.Statistics
     /// will first transform all objects into suitable <see cref="ModelToStructExtensions"/>and load them into Lists, thus achieving data locality and speeding up subsequent 
     /// requests to the data. Reporting features ustilizing loops over these collections should enjoy a significant speedup after initialization.
     /// </summary>
-    public class StackFlowDataCollections
+    public abstract class StackFlowDataCollections
     {
-        
+       public static IStackFlowDataCollections CreateStackFlowDataCollection(IEnumerable<StackFlowSession> Source)
+        {
+            return new SingleThreadInitializeStackFlowDataCollection(Source);
+        }
     }
 }
