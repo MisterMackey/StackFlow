@@ -17,7 +17,6 @@ namespace StackFlow.Statistics
 
         public TimeSpan GetTimeWorkedOnPriority(WorkStackItemPriority Priority, DateTimeOffset From, DateTimeOffset Until)
         {
-            TimeSpan timeSpan = new TimeSpan(ticks:0);
             int[] StackIds = Collection.Stacks.
                 Where(stack => stack.Priority == Priority).
                 Select(s => s.Id).
@@ -25,10 +24,12 @@ namespace StackFlow.Statistics
                 Select(grouping => grouping.Key).
                 ToArray();
 
-            ActiveTimeSpan sumSpan = Collection.Times.
+            var sumActiveTicks = Collection.Times.
                 Where(time => StackIds.Contains(time.StackId)).
+                Where(time => time.ActiveTimeSpan.ActivatedAbsoluteTime != null).
                 Select(time => time.ActiveTimeSpan).
-                Sum();
+                Sum(span => span.ActivatedAbsoluteTime.Ticks);
+            TimeSpan timeSpan = new TimeSpan(ticks: sumActiveTicks);
             return timeSpan;
         }
     }
