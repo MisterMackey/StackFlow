@@ -25,10 +25,11 @@ namespace StackFlow.Statistics
                 ToArray();
 
             var sumActiveTicks = Collection.Times.
+                Where(time => time.ActiveTimeSpan.ActivatedAbsoluteTime >= From && time.ActiveTimeSpan.ClosedAbsoluteTime <= Until).
                 Where(time => StackIds.Contains(time.StackId)).
                 Where(time => time.ActiveTimeSpan.ActivatedAbsoluteTime != null).
                 Select(time => time.ActiveTimeSpan).
-                Sum(span => span.ActivatedAbsoluteTime.Ticks);
+                Sum(span => span.ActiveTime.Value.Ticks);
             TimeSpan timeSpan = new TimeSpan(ticks: sumActiveTicks);
             return timeSpan;
         }

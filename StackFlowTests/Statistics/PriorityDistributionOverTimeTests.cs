@@ -28,9 +28,21 @@ namespace StackFlow.Statistics.Tests
             {
                 ActiveTimeSpan span = new ActiveTimeSpan();
                 span.ActiveTime = new TimeSpan(hours: i + 1, minutes: 0, seconds: 0);
+                span.ActivatedAbsoluteTime = DateTimeOffset.MinValue;
+                span.ClosedAbsoluteTime = DateTimeOffset.MaxValue;
                 WorkStack stack = new WorkStack("test", "will work 1h on prio 1, 2h on prio 2 and so on");
-                stack.Push(new WorkStackItem("test", "stack takes prio from its items", Priority: (WorkStackItemPriority)Enum.Parse(typeof(WorkStackItemPriority),valuesOfPriority[i])));
+                stack.PeriodsWhenActivated.Add(span);
+                stack.Push(new WorkStackItem("test", "stack takes prio from its items", Priority: (WorkStackItemPriority)Enum.Parse(typeof(WorkStackItemPriority), valuesOfPriority[i])));
                 sesh.Session.Add(stack);
+            }
+
+            //get the prioritydistribution
+            PriorityDistributionOverTime test = new PriorityDistributionOverTime(new StackFlowSession[] { sesh });
+            for (int i = 0; i < valuesOfPriority.Length; i++)
+            {
+                var time = test.GetTimeWorkedOnPriority(
+                    (WorkStackItemPriority)Enum.Parse(typeof(WorkStackItemPriority), valuesOfPriority[i]), DateTimeOffset.MinValue, DateTimeOffset.MaxValue);
+                Assert.IsTrue(time.TotalHours == i + 1);
             }
         }
     }
