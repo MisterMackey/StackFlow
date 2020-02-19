@@ -51,6 +51,7 @@ namespace StackFlow
             //might be session is empty, no update then
             if (GetActiveSession().ActiveStack == null) { return; }
             UpdateActiveStackControl();
+            UpdateDescriptionControl();
             UpdateInactiveStackControl();
             Text = $"StackFlow - {GetActiveSession().Name}";
         }
@@ -98,6 +99,7 @@ namespace StackFlow
             ButtonPop.Click += ButtonPopClick;
             ListViewSessionInactiveStacks.ItemActivate += InactiveStackSelected;
             this.FormClosing += OnAppExit;
+            TextBoxDescription.LostFocus += OnDescriptionTextBoxLostFocus;
         }
 
 
@@ -206,7 +208,18 @@ namespace StackFlow
             LabelTitleActiveStack.Text = GetActiveSession().ActiveStack.Name;
         }
 
-
+        private void UpdateDescriptionControl()
+        {
+            if (GetActiveSession().ActiveStack.Any())
+            {
+                TextBoxDescription.Text = GetActiveSession().ActiveStack.Peek().Description;
+            }
+            else
+            {
+                TextBoxDescription.Text = "";
+            }
+            
+        }
 
         private void UpdateInactiveStackControl()
         {
@@ -267,8 +280,12 @@ namespace StackFlow
         }
         private WorkStackItem GetUserInputNewItem()
         {
+            return GetUserInputNewItem("", "");
+        }
+        private WorkStackItem GetUserInputNewItem(string nameField, string descriptionField)
+        {
             WorkStackItemPriority defaultPrio = GetActiveSession().ActiveStack == null ? WorkStackItemPriority.Whenever : GetActiveSession().ActiveStack.Priority; 
-            SupportingForms.NewItemInputForm input = new SupportingForms.NewItemInputForm(defaultPrio);
+            SupportingForms.NewItemInputForm input = new SupportingForms.NewItemInputForm(defaultPrio, nameField, descriptionField);            
             input.ShowDialog();
             if (input.DialogResult == DialogResult.OK)
             {
@@ -324,13 +341,17 @@ namespace StackFlow
 
         private void ButtonModifyClick(object sender, EventArgs e)
         {
-            ActiveStackModificationEventArgs a = new ActiveStackModificationEventArgs();
-            a.TypeOfChange = ActiveStackModificationTypes.ItemModified;
-            if ((a.NewItem = GetUserInputNewItem()) == null)
+            if (GetActiveSession().ActiveStack.Any())
             {
-                return;
+                ActiveStackModificationEventArgs a = new ActiveStackModificationEventArgs();
+                a.TypeOfChange = ActiveStackModificationTypes.ItemModified;
+                var itum = GetActiveSession().ActiveStack.Peek();
+                if ((a.NewItem = GetUserInputNewItem(itum.Name, itum.Description)) == null)
+                {
+                    return;
+                }
+                UserModifiesActiveStack?.Invoke(sender, a); 
             }
-            UserModifiesActiveStack?.Invoke(sender, a);
         }
 
         private void ButtonInterruptClick(object sender, EventArgs e)
@@ -370,6 +391,21 @@ namespace StackFlow
                 Label ctrl = sender as Label;
                 this.TitleOfItemInActiveStackThatGotRightClicked = ctrl.Text;
                 ctrl.ContextMenuStrip.Show(ctrl, Cursor.Position, ToolStripDropDownDirection.Default);                
+            }
+        }
+
+        private void OnDescriptionTextBoxLostFocus(object sender, EventArgs e)
+        {
+            if (GetActiveSession().ActiveStack.Any())
+            {
+                var text = TextBoxDescription.Text;
+                var activeItem = GetActiveSession().ActiveStack.Peek();
+                activeItem.Description = text;
+                UserModifiesActiveStack(sender, new ActiveStackModificationEventArgs()
+                {
+                    TypeOfChange = ActiveStackModificationTypes.ItemModified,
+                    NewItem = activeItem
+                }); 
             }
         }
         #endregion

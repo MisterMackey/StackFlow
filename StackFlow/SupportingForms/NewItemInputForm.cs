@@ -20,9 +20,11 @@ namespace StackFlow.SupportingForms
             ButtonOk.Click += CloseOnOk;
             KeyPreview = true;
         }
-        public NewItemInputForm(WorkStackItemPriority defaultPriority) : this()
+        public NewItemInputForm(WorkStackItemPriority defaultPriority, string name, string descr) : this()
         {
             ListBoxPriority.SelectedItem = defaultPriority;
+            TextBoxName.Text = name;
+            RichTextBoxDescription.Text = descr;
         }
 
 

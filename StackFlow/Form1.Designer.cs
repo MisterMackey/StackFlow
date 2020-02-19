@@ -37,6 +37,7 @@
             this.ButtonModify = new System.Windows.Forms.Button();
             this.LabelTitleActiveStack = new System.Windows.Forms.Label();
             this.ListViewSessionInactiveStacks = new System.Windows.Forms.ListView();
+            this.TextBoxDescription = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // ButtonSave
@@ -119,11 +120,20 @@
             this.ListViewSessionInactiveStacks.TabIndex = 3;
             this.ListViewSessionInactiveStacks.UseCompatibleStateImageBehavior = false;
             // 
+            // TextBoxDescription
+            // 
+            this.TextBoxDescription.Location = new System.Drawing.Point(794, 33);
+            this.TextBoxDescription.Multiline = true;
+            this.TextBoxDescription.Name = "TextBoxDescription";
+            this.TextBoxDescription.Size = new System.Drawing.Size(206, 426);
+            this.TextBoxDescription.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 701);
+            this.Controls.Add(this.TextBoxDescription);
             this.Controls.Add(this.ListViewSessionInactiveStacks);
             this.Controls.Add(this.LabelTitleActiveStack);
             this.Controls.Add(this.ButtonModify);
@@ -151,6 +161,7 @@
         private System.Windows.Forms.Button ButtonModify;
         private System.Windows.Forms.Label LabelTitleActiveStack;
         private System.Windows.Forms.ListView ListViewSessionInactiveStacks;
+        private System.Windows.Forms.TextBox TextBoxDescription;
     }
 }
 
