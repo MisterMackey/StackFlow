@@ -38,6 +38,7 @@
             this.LabelTitleActiveStack = new System.Windows.Forms.Label();
             this.ListViewSessionInactiveStacks = new System.Windows.Forms.ListView();
             this.TextBoxDescription = new System.Windows.Forms.TextBox();
+            this.ButtonShowPlotForm = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ButtonSave
@@ -128,11 +129,21 @@
             this.TextBoxDescription.Size = new System.Drawing.Size(206, 426);
             this.TextBoxDescription.TabIndex = 4;
             // 
+            // ButtonShowPlotForm
+            // 
+            this.ButtonShowPlotForm.Location = new System.Drawing.Point(867, 639);
+            this.ButtonShowPlotForm.Name = "ButtonShowPlotForm";
+            this.ButtonShowPlotForm.Size = new System.Drawing.Size(100, 50);
+            this.ButtonShowPlotForm.TabIndex = 5;
+            this.ButtonShowPlotForm.Text = "Shot Plot";
+            this.ButtonShowPlotForm.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 701);
+            this.Controls.Add(this.ButtonShowPlotForm);
             this.Controls.Add(this.TextBoxDescription);
             this.Controls.Add(this.ListViewSessionInactiveStacks);
             this.Controls.Add(this.LabelTitleActiveStack);
@@ -162,6 +173,7 @@
         private System.Windows.Forms.Label LabelTitleActiveStack;
         private System.Windows.Forms.ListView ListViewSessionInactiveStacks;
         private System.Windows.Forms.TextBox TextBoxDescription;
+        private System.Windows.Forms.Button ButtonShowPlotForm;
     }
 }
 

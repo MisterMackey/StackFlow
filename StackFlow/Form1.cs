@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Linq;
 using StackFlow.Procedures;
+using StackFlow.Statistics;
+using StackFlow.Plotting;
+using StackFlow.SupportingForms;
 
 namespace StackFlow
 {
@@ -111,8 +114,8 @@ namespace StackFlow
             this.FormClosing += OnAppExit;
             TextBoxDescription.LostFocus += OnDescriptionTextBoxLostFocus;
             KeyDown += OnFormKeyDown;
+            ButtonShowPlotForm.Click += OnUserWantsToSeeSomeStats;
         }
-
 
 
         /// <summary>
@@ -135,6 +138,16 @@ namespace StackFlow
         }
 
         #region EventHandlers
+
+        private void OnUserWantsToSeeSomeStats(object sender, EventArgs e)
+        {
+            PriorityDistributionOverTime data = new PriorityDistributionOverTime(new StackFlowSession[] { GetActiveSession() });
+            PriorityDistributionPlotModel generator = new PriorityDistributionPlotModel();
+            var model = generator.GetModel(data, DateTimeOffset.MinValue, DateTimeOffset.MaxValue);
+            PlotForm form = new PlotForm(model);
+            form.ShowDialog();
+        }
+
 
         private void OnFormKeyDown(object sender, KeyEventArgs e)
         {
