@@ -81,6 +81,15 @@ namespace StackFlow
             ,
                 Action = HotKeyableActions.BringToForeground
             });
+            //following to register ctrl s as save
+            UserRequestsNewHotkey?.Invoke(this, new HotKeyRegisterEventArgs()
+            {
+                HotKeyId = (int)Keys.S,
+                KeyToRegister = Keys.S,
+                WindowHandleToRegisterHotKeyTo = Handle,
+                Modifier = 6,
+                Action = HotKeyableActions.Save
+            });
             SetActiveSession(new StackFlowSession() { Name = "DefaultSession" });
             ListViewSessionInactiveStacks.Scrollable = true;
             ListViewSessionInactiveStacks.View = View.Details;
@@ -101,6 +110,7 @@ namespace StackFlow
             ListViewSessionInactiveStacks.ItemActivate += InactiveStackSelected;
             this.FormClosing += OnAppExit;
             TextBoxDescription.LostFocus += OnDescriptionTextBoxLostFocus;
+            KeyDown += OnFormKeyDown;
         }
 
 
@@ -126,6 +136,19 @@ namespace StackFlow
 
         #region EventHandlers
 
+        private void OnFormKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.Control) //no control no hotkey
+            {
+                e.SuppressKeyPress = true;
+                UserPressedHotkey?.Invoke(this, new HotKeyPressEventArgs()
+                {
+                    HandleHotKeyIsRegisteredTo = Handle,
+                    KeyId = e.KeyValue,
+                    Message = $"{SaveFileLocation}\\{GetActiveSession().Name}"
+                }); 
+            }
+        }
 
         private void OnAppExit(object sender, FormClosingEventArgs e)
         {

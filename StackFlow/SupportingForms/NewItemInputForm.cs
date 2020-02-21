@@ -38,11 +38,13 @@ namespace StackFlow.SupportingForms
         {
             if (e.KeyCode == Keys.Enter && (e.Modifiers & Keys.Modifiers) == Keys.None)
             {
+                e.SuppressKeyPress = true;
                 this.DialogResult = DialogResult.OK;
                 this.Close();
             }
             else if (e.KeyCode == Keys.Escape)
             {
+                e.SuppressKeyPress = true;
                 DialogResult = DialogResult.Cancel;
                 Close();
             }
