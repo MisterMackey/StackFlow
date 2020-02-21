@@ -116,6 +116,9 @@ namespace StackFlow.Procedures
             DateTimeOffset n = DateTimeOffset.Now;
             span.ClosedAbsoluteTime = n;
             span.ActiveTime = TimeSpan.FromTicks(span.ActivatedAbsoluteTime.Ticks - n.Ticks);
+            //replace the last value
+            Session.PeriodsWhenActivated.RemoveAt(Session.PeriodsWhenActivated.Count - 1);
+            Session.PeriodsWhenActivated.Add(span);
         }
         #endregion
 

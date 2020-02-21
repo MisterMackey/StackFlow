@@ -61,10 +61,13 @@ namespace StackFlow.Procedures
         {
             if (!Stack.IsActive) { return; }
             Stack.IsActive = false;
-            var span = Stack.PeriodsWhenActivated.Last();
+            var span = Stack.PeriodsWhenActivated.Last(); //valuetype! creates a copy
             DateTimeOffset n = DateTimeOffset.Now;
             span.ClosedAbsoluteTime = n;
             span.ActiveTime = TimeSpan.FromTicks(span.ActivatedAbsoluteTime.Ticks - n.Ticks);
+            //replace the last value
+            Stack.PeriodsWhenActivated.RemoveAt(Stack.PeriodsWhenActivated.Count - 1);
+            Stack.PeriodsWhenActivated.Add(span);
         }
 
         private static void PutItemsBack(WorkStack Stack, Stack<WorkStackItem> tempStack)
