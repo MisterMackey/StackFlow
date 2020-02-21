@@ -18,6 +18,7 @@ namespace StackFlow
         private readonly int PutThisFormToForeGround;
         private const int ItemsVisibleInActiveStack = 10;
         private string TitleOfItemInActiveStackThatGotRightClicked; //used to store a string we need if user right clicks and selects an op
+        private string SaveFileLocation; //gets set when loading or saving the session
         internal StackFlowSession ActiveSession { get; set; }
         #region Events
         public event EventHandler<WorkInterruptionEventArgs> UserClicksInterrupt;
@@ -242,7 +243,7 @@ namespace StackFlow
             {
                 SessionSaveOrLoadEventArgs ret = new SessionSaveOrLoadEventArgs();
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.InitialDirectory = Environment.CurrentDirectory;
+                saveFileDialog.InitialDirectory = SaveFileLocation ?? Environment.CurrentDirectory;
                 saveFileDialog.Filter = ".dat files (default StackFlow format)|*.dat";
                 saveFileDialog.Title = "Save/Load session";
                 saveFileDialog.FileName = GetActiveSession().Name;
@@ -261,7 +262,7 @@ namespace StackFlow
             {
                 SessionSaveOrLoadEventArgs ret = new SessionSaveOrLoadEventArgs();
                 OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.InitialDirectory = Environment.CurrentDirectory;
+                openFileDialog.InitialDirectory = SaveFileLocation ?? Environment.CurrentDirectory;
                 openFileDialog.Filter = ".dat files (default StackFlow format)|*.dat";
                 openFileDialog.Title = "Save/Load session";
                 openFileDialog.FileName = GetActiveSession().Name;
@@ -322,6 +323,7 @@ namespace StackFlow
             }
             else
             {
+                SaveFileLocation = a.Folder;
                 UserSavesSession?.Invoke(sender, a);
             }            
         }
@@ -335,6 +337,7 @@ namespace StackFlow
             }
             else
             {
+                SaveFileLocation = a.Folder;
                 UserLoadsSession?.Invoke(sender, a);
             }
         }

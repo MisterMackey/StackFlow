@@ -33,5 +33,11 @@ namespace StackFlow.Statistics
             TimeSpan timeSpan = new TimeSpan(ticks: sumActiveTicks);
             return timeSpan;
         }
+
+        public TimeSpan GetTimeNotSpentOnHighestPriority(DateTimeOffset From, DateTimeOffset Until)
+        {
+            //todo: everything
+            return new TimeSpan();
+        }
     }
 }

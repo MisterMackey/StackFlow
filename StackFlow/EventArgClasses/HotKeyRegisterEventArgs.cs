@@ -6,6 +6,8 @@ namespace StackFlow.EventArgClasses
     public enum HotKeyableActions
     {
         BringToForeground
+            ,Save
+            ,Load
     }
     public class HotKeyRegisterEventArgs : EventArgs
     {
