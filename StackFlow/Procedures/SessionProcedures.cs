@@ -115,7 +115,7 @@ namespace StackFlow.Procedures
             var span = Session.PeriodsWhenActivated.Last();
             DateTimeOffset n = DateTimeOffset.Now;
             span.ClosedAbsoluteTime = n;
-            span.ActiveTime = TimeSpan.FromTicks(span.ActivatedAbsoluteTime.Ticks - n.Ticks);
+            span.ActiveTime = TimeSpan.FromTicks(n.Ticks - span.ActivatedAbsoluteTime.Ticks);
             //replace the last value
             Session.PeriodsWhenActivated.RemoveAt(Session.PeriodsWhenActivated.Count - 1);
             Session.PeriodsWhenActivated.Add(span);

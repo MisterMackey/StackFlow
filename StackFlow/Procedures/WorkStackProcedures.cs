@@ -64,7 +64,7 @@ namespace StackFlow.Procedures
             var span = Stack.PeriodsWhenActivated.Last(); //valuetype! creates a copy
             DateTimeOffset n = DateTimeOffset.Now;
             span.ClosedAbsoluteTime = n;
-            span.ActiveTime = TimeSpan.FromTicks(span.ActivatedAbsoluteTime.Ticks - n.Ticks);
+            span.ActiveTime = TimeSpan.FromTicks(n.Ticks - span.ActivatedAbsoluteTime.Ticks);
             //replace the last value
             Stack.PeriodsWhenActivated.RemoveAt(Stack.PeriodsWhenActivated.Count - 1);
             Stack.PeriodsWhenActivated.Add(span);

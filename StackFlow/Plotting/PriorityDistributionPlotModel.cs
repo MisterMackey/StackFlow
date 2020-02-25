@@ -15,10 +15,10 @@ namespace StackFlow.Plotting
         public PlotModel GetModel(PriorityDistributionOverTime data, DateTimeOffset From, DateTimeOffset Until)
         {
             PlotModel model = new PlotModel();
-            BarSeries series = new BarSeries();
-            List<BarItem> seriesSource = new List<BarItem>();
             CategoryAxis categoryAxis = new CategoryAxis();
             List<string> categorySource = new List<string>();
+            LinearAxis timeSpanAxis = new LinearAxis();
+            List<TimeSpan> times = new List<TimeSpan>();
             var priorityList = Enum.GetNames(typeof(WorkStackItemPriority));
 
             foreach (var prio in priorityList)
@@ -27,16 +27,27 @@ namespace StackFlow.Plotting
                 int i = 0;
                 categorySource.Add(prio);
                 var time = data.GetTimeWorkedOnPriority(p, From, Until);
-                double value = time.TotalMinutes;
-                seriesSource.Add(new BarItem(value, i++));
+                times.Add(time);
             }
-            series.ItemsSource = seriesSource;
-            categoryAxis.ItemsSource = categorySource;
+            
+            //categoryAxis.ItemsSource = categorySource;
             categoryAxis.Title = "Priority";
-            series.Title = "Time spent in minutes";
+            categoryAxis.Position = AxisPosition.Bottom;
+            timeSpanAxis.Title = "time in minutes";
+            timeSpanAxis.Position = AxisPosition.Left;
 
-            model.Series.Add(series);
             model.Axes.Add(categoryAxis);
+            model.Axes.Add(timeSpanAxis);
+            ColumnSeries series = new ColumnSeries();
+            //series.ItemsSource = times;
+            for (int i = 0; i < times.Count; i++)
+            {
+                series.Items.Add(new ColumnItem(
+                    times[i].TotalMinutes)                );
+                categoryAxis.Labels.Add(priorityList[i]);
+                
+            }
+            model.Series.Add(series);
 
             return model;
         }

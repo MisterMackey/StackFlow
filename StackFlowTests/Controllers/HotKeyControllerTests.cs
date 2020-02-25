@@ -40,6 +40,7 @@ namespace StackFlow.Controllers.Tests
                 HandleHotKeyIsRegisteredTo = form.Handle
                 ,
                 KeyId = 678
+                ,Modifier = 6
             });
             //did we crash yet? no? good than its probly working :D
         }

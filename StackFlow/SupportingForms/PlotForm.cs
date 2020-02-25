@@ -15,6 +15,8 @@ namespace StackFlow.SupportingForms
         private PlotView plot;
         public PlotForm(PlotModel model)
         {
+
+            this.Size = new Size(1000, 1000);
             InitializeComponent();
             plot = new PlotView();
             Controls.Add(plot);
@@ -22,8 +24,8 @@ namespace StackFlow.SupportingForms
             plot.Model = model;
             plot.Text = "Priority over time";
             plot.Visible = true;
-            plot.Size = new Size(500,500);
-            plot.Location = new Point(0, 0);
+            plot.Size = new Size(900,900);
+            plot.Location = new Point(50, 50);
             plot.Show();
             PerformLayout();
         }
