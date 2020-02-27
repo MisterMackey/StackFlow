@@ -17,7 +17,8 @@ namespace StackFlow.Models
             get 
             { 
                 if (m_Stack.Any()) { return m_Stack.Max(x => x.Priority); }
-                else { return WorkStackItemPriority.FourWeeks; }
+                else if (CompletedItems.Any()) { return CompletedItems.Max(x => x.Priority); }
+                else { return WorkStackItemPriority.Whenever; }
             }
         }
         public List<WorkStackItem> CompletedItems { get; }
