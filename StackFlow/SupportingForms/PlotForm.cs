@@ -15,31 +15,23 @@ namespace StackFlow.SupportingForms
         private PlotView plot;
         public PlotForm(PlotModel model)
         {
-
-            this.Size = new Size(1000, 1000);
             InitializeComponent();
+            DrawPlotView(model);
+            DateTimePickerFrom.Value = DateTime.Now.AddDays(-14); //init the from picker to 2 weeks ago
+        }
+
+        private void DrawPlotView(PlotModel model)
+        {
             plot = new PlotView();
-            Controls.Add(plot);
+            TabMainPage.TabPages["TimeStats"].Controls.Add(plot);
             SuspendLayout();
             plot.Model = model;
             plot.Text = "Priority over time";
             plot.Visible = true;
-            plot.Size = new Size(900,900);
+            plot.Size = new Size(900, 900);
             plot.Location = new Point(50, 50);
             plot.Show();
             PerformLayout();
         }
     }
 }
-/*
- *             InitializeComponent();
-            PlotView = new PlotView();
-            this.Controls.Add(PlotView);
-            SuspendLayout();
-            PlotView.Model = PriorityDistribution.GetTestPlotModel();
-            PlotView.Visible = true;
-            PlotView.Location = new Point(0,0);
-            PlotView.Size = new Size(500, 500);
-            PlotView.Show();
-            PerformLayout();
-*/
