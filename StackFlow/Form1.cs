@@ -144,7 +144,7 @@ namespace StackFlow
             PriorityDistributionOverTime data = new PriorityDistributionOverTime(new StackFlowSession[] { GetActiveSession() });
             PriorityDistributionPlotModel generator = new PriorityDistributionPlotModel();
             var model = generator.GetModel(data, DateTimeOffset.MinValue, DateTimeOffset.MaxValue);
-            PlotForm form = new PlotForm(model);
+            PlotForm form = new PlotForm(model, data);
             form.ShowDialog();
         }
 

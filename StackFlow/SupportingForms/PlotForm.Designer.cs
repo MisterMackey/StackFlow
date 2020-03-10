@@ -32,11 +32,12 @@
             this.TimeStats = new System.Windows.Forms.TabPage();
             this.CompletedItems = new System.Windows.Forms.TabPage();
             this.GroupBoxFilterControls = new System.Windows.Forms.GroupBox();
-            this.DateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
-            this.DateTimePickerTo = new System.Windows.Forms.DateTimePicker();
-            this.LabelFrom = new System.Windows.Forms.Label();
-            this.LabelTo = new System.Windows.Forms.Label();
             this.TextBoxTextFilter = new System.Windows.Forms.TextBox();
+            this.LabelTo = new System.Windows.Forms.Label();
+            this.LabelFrom = new System.Windows.Forms.Label();
+            this.DateTimePickerTo = new System.Windows.Forms.DateTimePicker();
+            this.DateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
+            this.ButtonRegenerate = new System.Windows.Forms.Button();
             this.TabMainPage.SuspendLayout();
             this.GroupBoxFilterControls.SuspendLayout();
             this.SuspendLayout();
@@ -66,13 +67,14 @@
             this.CompletedItems.Location = new System.Drawing.Point(4, 24);
             this.CompletedItems.Name = "CompletedItems";
             this.CompletedItems.Padding = new System.Windows.Forms.Padding(3);
-            this.CompletedItems.Size = new System.Drawing.Size(1663, 974);
+            this.CompletedItems.Size = new System.Drawing.Size(1354, 974);
             this.CompletedItems.TabIndex = 1;
             this.CompletedItems.Text = "Completed Items";
             this.CompletedItems.UseVisualStyleBackColor = true;
             // 
             // GroupBoxFilterControls
             // 
+            this.GroupBoxFilterControls.Controls.Add(this.ButtonRegenerate);
             this.GroupBoxFilterControls.Controls.Add(this.TextBoxTextFilter);
             this.GroupBoxFilterControls.Controls.Add(this.LabelTo);
             this.GroupBoxFilterControls.Controls.Add(this.LabelFrom);
@@ -85,28 +87,12 @@
             this.GroupBoxFilterControls.TabStop = false;
             this.GroupBoxFilterControls.Text = "Filtering Controls";
             // 
-            // DateTimePickerFrom
+            // TextBoxTextFilter
             // 
-            this.DateTimePickerFrom.Location = new System.Drawing.Point(68, 45);
-            this.DateTimePickerFrom.Name = "DateTimePickerFrom";
-            this.DateTimePickerFrom.Size = new System.Drawing.Size(200, 23);
-            this.DateTimePickerFrom.TabIndex = 0;
-            // 
-            // DateTimePickerTo
-            // 
-            this.DateTimePickerTo.Location = new System.Drawing.Point(68, 84);
-            this.DateTimePickerTo.Name = "DateTimePickerTo";
-            this.DateTimePickerTo.Size = new System.Drawing.Size(200, 23);
-            this.DateTimePickerTo.TabIndex = 1;
-            // 
-            // LabelFrom
-            // 
-            this.LabelFrom.AutoSize = true;
-            this.LabelFrom.Location = new System.Drawing.Point(24, 45);
-            this.LabelFrom.Name = "LabelFrom";
-            this.LabelFrom.Size = new System.Drawing.Size(35, 15);
-            this.LabelFrom.TabIndex = 2;
-            this.LabelFrom.Text = "From";
+            this.TextBoxTextFilter.Location = new System.Drawing.Point(6, 165);
+            this.TextBoxTextFilter.Name = "TextBoxTextFilter";
+            this.TextBoxTextFilter.Size = new System.Drawing.Size(262, 23);
+            this.TextBoxTextFilter.TabIndex = 4;
             // 
             // LabelTo
             // 
@@ -117,12 +103,37 @@
             this.LabelTo.TabIndex = 3;
             this.LabelTo.Text = "To";
             // 
-            // TextBoxTextFilter
+            // LabelFrom
             // 
-            this.TextBoxTextFilter.Location = new System.Drawing.Point(6, 165);
-            this.TextBoxTextFilter.Name = "TextBoxTextFilter";
-            this.TextBoxTextFilter.Size = new System.Drawing.Size(262, 23);
-            this.TextBoxTextFilter.TabIndex = 4;
+            this.LabelFrom.AutoSize = true;
+            this.LabelFrom.Location = new System.Drawing.Point(24, 45);
+            this.LabelFrom.Name = "LabelFrom";
+            this.LabelFrom.Size = new System.Drawing.Size(35, 15);
+            this.LabelFrom.TabIndex = 2;
+            this.LabelFrom.Text = "From";
+            // 
+            // DateTimePickerTo
+            // 
+            this.DateTimePickerTo.Location = new System.Drawing.Point(68, 84);
+            this.DateTimePickerTo.Name = "DateTimePickerTo";
+            this.DateTimePickerTo.Size = new System.Drawing.Size(200, 23);
+            this.DateTimePickerTo.TabIndex = 1;
+            // 
+            // DateTimePickerFrom
+            // 
+            this.DateTimePickerFrom.Location = new System.Drawing.Point(68, 45);
+            this.DateTimePickerFrom.Name = "DateTimePickerFrom";
+            this.DateTimePickerFrom.Size = new System.Drawing.Size(200, 23);
+            this.DateTimePickerFrom.TabIndex = 0;
+            // 
+            // ButtonRegenerate
+            // 
+            this.ButtonRegenerate.Location = new System.Drawing.Point(19, 945);
+            this.ButtonRegenerate.Name = "ButtonRegenerate";
+            this.ButtonRegenerate.Size = new System.Drawing.Size(75, 23);
+            this.ButtonRegenerate.TabIndex = 5;
+            this.ButtonRegenerate.Text = "Generate";
+            this.ButtonRegenerate.UseVisualStyleBackColor = true;
             // 
             // PlotForm
             // 
@@ -151,5 +162,6 @@
         private System.Windows.Forms.DateTimePicker DateTimePickerTo;
         private System.Windows.Forms.DateTimePicker DateTimePickerFrom;
         private System.Windows.Forms.TextBox TextBoxTextFilter;
+        private System.Windows.Forms.Button ButtonRegenerate;
     }
 }
